@@ -2,6 +2,8 @@
 
 import { headers } from "next/headers";
 import { site } from "@/content/site";
+import { getDictionary } from "@/i18n/dictionaries";
+import { defaultLocale, isLocale } from "@/i18n/config";
 import {
   BUDGET_RANGES,
   PROJECT_TYPES,
@@ -52,11 +54,17 @@ export async function sendInquiry(
     return typeof value === "string" ? value.trim() : "";
   };
 
+  const requestedLocale = read("locale");
+  const locale = isLocale(requestedLocale) ? requestedLocale : defaultLocale;
+  const messages = getDictionary(locale).contact.form.errors;
+  const withEmail = (template: string) =>
+    template.replaceAll("{email}", site.email);
+
   // Honeypot: real visitors never fill this off-screen field.
   if (read("website_url") !== "") {
     return {
       status: "success",
-      message: "Thanks — your message has been received.",
+      message: messages.success,
       errors: {},
     };
   }
@@ -69,9 +77,7 @@ export async function sendInquiry(
     "unknown";
 
   if (isRateLimited(clientKey)) {
-    return errorState(
-      "Too many inquiries were sent from this connection. Please wait a few minutes and try again.",
-    );
+    return errorState(messages.rateLimited);
   }
 
   const name = read("name");
@@ -84,39 +90,36 @@ export async function sendInquiry(
   const errors: Partial<Record<ContactField, string>> = {};
 
   if (name.length < 2 || name.length > 80) {
-    errors.name = "Please enter your name (2–80 characters).";
+    errors.name = messages.name;
   }
 
   if (!EMAIL_PATTERN.test(email) || email.length > 200) {
-    errors.email = "Please enter a valid email address.";
+    errors.email = messages.email;
   }
 
   if (company.length > 120) {
-    errors.company = "Company name is too long (120 characters maximum).";
+    errors.company = messages.company;
   }
 
   if (!PROJECT_TYPES.includes(projectType as (typeof PROJECT_TYPES)[number])) {
-    errors.projectType = "Please choose a project type.";
+    errors.projectType = messages.projectType;
   }
 
   if (!BUDGET_RANGES.includes(budget as (typeof BUDGET_RANGES)[number])) {
-    errors.budget = "Please choose a budget range.";
+    errors.budget = messages.budget;
   }
 
   if (message.length < 20 || message.length > 3000) {
-    errors.message =
-      "Please describe the project in at least 20 characters (3000 maximum).";
+    errors.message = messages.message;
   }
 
   if (Object.keys(errors).length > 0) {
-    return errorState("Please check the highlighted fields.", errors);
+    return errorState(messages.checkFields, errors);
   }
 
   const endpoint = process.env.CONTACT_WEBHOOK_URL;
   if (!endpoint) {
-    return errorState(
-      `The inquiry form is not connected to an inbox yet. Please email ${site.email} directly, or contact us on WhatsApp.`,
-    );
+    return errorState(withEmail(messages.notConnected));
   }
 
   try {
@@ -128,6 +131,7 @@ export async function sendInquiry(
       },
       body: JSON.stringify({
         source: site.url,
+        locale,
         submittedAt: new Date().toISOString(),
         name,
         email,
@@ -141,19 +145,15 @@ export async function sendInquiry(
     });
 
     if (!response.ok) {
-      return errorState(
-        `Something went wrong while sending your inquiry. Please try again, or email ${site.email} directly.`,
-      );
+      return errorState(withEmail(messages.deliveryFailed));
     }
   } catch {
-    return errorState(
-      `The message could not be delivered. Please try again, or email ${site.email} directly.`,
-    );
+    return errorState(withEmail(messages.couldNotDeliver));
   }
 
   return {
     status: "success",
-    message: "Thanks — your message has been received.",
+    message: messages.success,
     errors: {},
   };
 }

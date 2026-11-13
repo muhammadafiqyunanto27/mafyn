@@ -1,27 +1,35 @@
-import { nav, services, site } from "@/content/site";
+import { site } from "@/content/site";
 import { Wordmark } from "@/components/ui/wordmark";
+import type { Dictionary } from "@/content/types";
 
-export function SiteFooter() {
+export function SiteFooter({ dict }: { dict: Dictionary }) {
   const year = 2026;
+  const copy = dict.footer;
 
   return (
     <footer className="border-t border-paper/15 bg-ink text-paper">
       <div className="container-page pt-16 md:pt-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
-            <a href="#top" aria-label="MAFYN — back to top" className="inline-block">
-              <Wordmark tone="dark" />
+            <a href="#top" aria-label={dict.a11y.backToTop} className="inline-block">
+              <Wordmark
+                tone="inverse"
+                descriptor={dict.brand.descriptor}
+              />
             </a>
             <p className="mt-6 max-w-[38ch] text-sm leading-relaxed text-paper/60">
-              {site.description}
+              {dict.brand.description}
             </p>
-            <p className="label mt-8 text-paper/35">{site.tagline}</p>
+            <p className="label mt-8 text-paper/35">{dict.brand.tagline}</p>
           </div>
 
-          <nav aria-label="Footer" className="lg:col-span-2 lg:col-start-7">
-            <h2 className="label text-paper/40">Navigate</h2>
+          <nav
+            aria-label={dict.a11y.footerNav}
+            className="lg:col-span-2 lg:col-start-7"
+          >
+            <h2 className="label text-paper/40">{copy.navigate}</h2>
             <ul className="mt-4 space-y-2.5">
-              {nav.map((item) => (
+              {dict.nav.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
@@ -35,10 +43,13 @@ export function SiteFooter() {
           </nav>
 
           <div className="lg:col-span-2">
-            <h2 className="label text-paper/40">Services</h2>
+            <h2 className="label text-paper/40">{copy.services}</h2>
             <ul className="mt-4 space-y-2.5">
-              {services.map((service) => (
-                <li key={service.title} className="text-[0.8125rem] text-paper/60">
+              {dict.services.items.map((service) => (
+                <li
+                  key={service.title}
+                  className="text-[0.8125rem] text-paper/60"
+                >
                   {service.title}
                 </li>
               ))}
@@ -46,7 +57,7 @@ export function SiteFooter() {
           </div>
 
           <div className="lg:col-span-2">
-            <h2 className="label text-paper/40">Contact</h2>
+            <h2 className="label text-paper/40">{copy.contact}</h2>
             <ul className="mt-4 space-y-2.5">
               <li>
                 <a
@@ -57,15 +68,15 @@ export function SiteFooter() {
                 </a>
               </li>
               <li className="text-[0.8125rem] text-paper/60">
-                WhatsApp
+                {copy.whatsapp}
                 <span className="mt-0.5 block text-[0.75rem] text-paper/40">
-                  {site.whatsapp} (placeholder)
+                  {site.whatsapp} {copy.placeholder}
                 </span>
               </li>
               <li className="text-[0.8125rem] text-paper/60">
-                Indonesia
+                {copy.indonesia}
                 <span className="mt-0.5 block text-[0.75rem] text-paper/40">
-                  Working worldwide
+                  {copy.workingWorldwide}
                 </span>
               </li>
             </ul>
@@ -73,8 +84,10 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-14 flex flex-col gap-2 border-t border-paper/15 py-6 text-[0.75rem] text-paper/40 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {year} MAFYN. All rights reserved.</p>
-          <p>Full-stack development &amp; custom web applications</p>
+          <p>
+            © {year} MAFYN. {copy.rights}
+          </p>
+          <p>{copy.descriptor}</p>
         </div>
       </div>
 

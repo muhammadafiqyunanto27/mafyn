@@ -1,22 +1,22 @@
 type WordmarkProps = {
-  tone?: "light" | "dark";
-  descriptor?: boolean;
+  tone?: "default" | "inverse";
+  descriptor?: string;
   className?: string;
 };
 
 export function Wordmark({
-  tone = "light",
-  descriptor = true,
+  tone = "default",
+  descriptor,
   className = "",
 }: WordmarkProps) {
-  const dark = tone === "dark";
+  const inverse = tone === "inverse";
 
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
       <span
         aria-hidden="true"
         className={`grid h-7 w-7 shrink-0 place-items-center ${
-          dark ? "bg-paper text-ink" : "bg-ink text-paper"
+          inverse ? "bg-paper text-ink" : "bg-fg text-canvas"
         }`}
       >
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
@@ -29,7 +29,7 @@ export function Wordmark({
       <span className="flex flex-col leading-none">
         <span
           className={`font-display text-[1.0625rem] font-semibold tracking-[0.19em] ${
-            dark ? "text-paper" : "text-ink"
+            inverse ? "text-paper" : "text-fg"
           }`}
         >
           MAFYN
@@ -37,10 +37,10 @@ export function Wordmark({
         {descriptor && (
           <span
             className={`mt-[0.28rem] text-[0.5rem] font-medium uppercase tracking-[0.22em] ${
-              dark ? "text-paper/55" : "text-ink/50"
+              inverse ? "text-paper/55" : "text-fg/50"
             }`}
           >
-            Development Studio
+            {descriptor}
           </span>
         )}
       </span>

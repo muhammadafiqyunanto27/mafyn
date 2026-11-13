@@ -13,9 +13,9 @@ type ButtonLinkProps = {
 
 const variants = {
   solid:
-    "border-ink bg-ink text-paper hover:bg-slate hover:border-slate",
+    "border-fg bg-solid text-on-solid hover:border-fg hover:bg-solid-hover",
   outline:
-    "border-ink/25 bg-transparent text-ink hover:border-ink hover:bg-ink hover:text-paper",
+    "border-fg/25 bg-transparent text-fg hover:border-fg hover:bg-fg hover:text-canvas",
   inverse:
     "border-paper bg-paper text-ink hover:border-silver hover:bg-silver",
   "inverse-outline":

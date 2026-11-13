@@ -47,6 +47,10 @@ export type Dictionary = {
     location: string;
     locationShort: string;
   };
+  nav: {
+    label: string;
+    href: string;
+  }[];
   a11y: {
     skipToContent: string;
     backToTop: string;

@@ -2,39 +2,39 @@ import type { Dictionary } from "@/content/types";
 
 export const id = {
   meta: {
-    title: "MAFYN — Studio Pengembangan Full-stack",
+    title: "MAFYN — Studio Full-stack Development",
     description:
-      "MAFYN adalah studio pengembangan full-stack yang membangun website, aplikasi web kustom, dan sistem backend untuk menyelesaikan masalah bisnis nyata.",
+      "MAFYN adalah studio full-stack development yang membangun website, web app custom, dan sistem backend untuk menyelesaikan masalah bisnis nyata.",
     keywords: [
-      "pengembangan full-stack",
-      "pengembangan web",
-      "aplikasi web kustom",
-      "pengembangan perangkat lunak Indonesia",
-      "pengembangan Next.js",
-      "pengembangan backend",
+      "full-stack development",
+      "web development",
+      "web app custom",
+      "software development Indonesia",
+      "Next.js development",
+      "backend development",
     ],
-    ogAlt: "MAFYN — Studio pengembangan full-stack",
+    ogAlt: "MAFYN — Studio full-stack development",
     ogLocale: "id_ID",
     alternateOgLocale: "en_US",
     inLanguage: "id",
     areaServedWorldwide: "Seluruh dunia",
-    offerCatalog: "Layanan pengembangan",
+    offerCatalog: "Layanan development",
     knowsAbout: [
-      "Pengembangan full-stack",
-      "Pengembangan web",
-      "Aplikasi web kustom",
-      "Pengembangan backend",
+      "Full-stack development",
+      "Web development",
+      "Web app custom",
+      "Backend development",
       "Arsitektur database",
-      "Pemeliharaan aplikasi web",
+      "Maintenance aplikasi web",
     ],
   },
   brand: {
-    descriptor: "Studio Pengembangan",
+    descriptor: "Studio",
     tagline: "Engineering Digital Solutions.",
-    message: "Kami Membangun Solusi Digital yang Mendorong Bisnis Anda Maju.",
+    message: "Kami membangun solusi digital yang mendorong bisnis Anda maju.",
     description:
-      "MAFYN adalah studio pengembangan full-stack yang membangun website, aplikasi web kustom, dan sistem backend untuk menyelesaikan masalah bisnis nyata.",
-    location: "Indonesia — bekerja secara remote di seluruh dunia",
+      "MAFYN adalah studio full-stack development yang membangun website, web app custom, dan sistem backend untuk menyelesaikan masalah bisnis nyata.",
+    location: "Indonesia — bekerja remote dengan tim di seluruh dunia",
     locationShort: "Indonesia / Remote global",
   },
   nav: [
@@ -53,7 +53,7 @@ export const id = {
     openMenu: "Buka menu",
     closeMenu: "Tutup menu",
     footerNav: "Footer",
-    technologyStack: "Tumpukan teknologi",
+    technologyStack: "Tech stack",
     architecture: "Arsitektur sistem pada umumnya",
     theme: "Tema warna",
     language: "Bahasa",
@@ -68,10 +68,10 @@ export const id = {
     system: "Sistem",
   },
   hero: {
-    eyebrow: "Studio pengembangan full-stack",
-    headline: "Kami Membangun Solusi Digital yang Mendorong Bisnis Anda Maju.",
+    eyebrow: "Studio full-stack development",
+    headline: "Kami membangun solusi digital yang mendorong bisnis Anda maju.",
     description:
-      "Pengembangan full-stack dan aplikasi web kustom yang dirancang untuk menyelesaikan masalah bisnis nyata.",
+      "Full-stack development dan web app custom yang dirancang untuk menyelesaikan masalah bisnis nyata.",
     primaryCta: "Mulai Proyek",
     secondaryCta: "Lihat Karya Kami",
     verticalTagline: "Engineering Digital Solutions",
@@ -81,76 +81,76 @@ export const id = {
       layers: [
         {
           index: "01",
-          title: "Antarmuka",
-          items: "Aplikasi web · Dasbor · Situs pemasaran",
+          title: "Interface",
+          items: "Web app · Dashboard · Marketing site",
         },
         {
           index: "02",
-          title: "Aplikasi",
-          items: "Autentikasi · Logika bisnis · Tugas terjadwal",
+          title: "Application",
+          items: "Autentikasi · Business logic · Scheduled jobs",
         },
         {
           index: "03",
           title: "Data",
-          items: "PostgreSQL · Penyimpanan · Jejak audit",
+          items: "PostgreSQL · Storage · Audit log",
         },
       ],
       connectors: ["HTTPS / JSON", "SQL"],
-      footer: ["Batas yang jelas", "Dirancang untuk dirawat"],
+      footer: ["Boundary yang jelas", "Dirancang untuk di-maintain"],
     },
-    workingStack: "Teknologi yang digunakan",
+    workingStack: "Tech stack",
   },
   services: {
     label: "Layanan",
-    heading: "Perangkat lunak yang benar-benar bekerja untuk bisnis Anda.",
+    heading: "Software yang benar-benar bekerja untuk bisnis Anda.",
     intro:
-      "Empat layanan terfokus, satu standar rekayasa. Setiap kerja sama dimulai dari masalah bisnis, bukan dari teknologinya.",
-    typicalWork: "Cakupan kerja",
+      "Empat layanan fokus, satu standar engineering. Setiap kerja sama dimulai dari masalah bisnis, bukan dari teknologinya.",
+    typicalWork: "Scope kerja",
     items: [
       {
         index: "01",
-        title: "Pengembangan Website",
+        title: "Website Development",
         icon: "layout",
         value:
-          "Website yang jelas dan cepat—menjelaskan bisnis Anda, membangun kepercayaan dengan cepat, dan mengubah perhatian pengunjung menjadi permintaan yang nyata.",
+          "Website yang jelas dan cepat—menjelaskan bisnis Anda, membangun trust dengan cepat, dan mengubah kunjungan menjadi inquiry nyata.",
         offerings: [
           "Landing page",
-          "Website profil perusahaan",
-          "Website katalog produk",
+          "Company profile",
+          "Product catalog",
         ],
       },
       {
         index: "02",
-        title: "Aplikasi Web Kustom",
+        title: "Custom Web App",
         icon: "layers",
         value:
-          "Perangkat lunak yang dibentuk sesuai cara bisnis Anda benar-benar berjalan—menggantikan spreadsheet yang tersebar dan pekerjaan manual dengan satu sistem yang andal.",
+          "Software yang dibentuk sesuai cara bisnis Anda benar-benar berjalan—menggantikan spreadsheet yang tersebar dan pekerjaan manual dengan satu sistem yang andal.",
         offerings: [
           "Sistem manajemen bisnis",
-          "Dasbor admin",
-          "Otomasi alur kerja",
+          "Admin dashboard",
+          "Workflow automation",
         ],
       },
       {
         index: "03",
-        title: "Pengembangan Backend",
+        title: "Backend Development",
         icon: "database",
         value:
-          "Lapisan andal di balik produk Anda: API yang bersih, model data yang kuat, dan integrasi yang menjaga seluruh alat kerja tetap sinkron.",
+          "Layer andal di balik produk Anda: API yang bersih, model data yang kuat, dan integrasi yang menjaga seluruh tools tetap sinkron.",
         offerings: [
           "REST API",
           "Arsitektur database",
-          "Integrasi pihak ketiga",
+          "Integrasi third-party",
         ],
       },
       {
         index: "04",
-        title: "Pemeliharaan & Dukungan",
+        title: "Maintenance & Support",
         icon: "wrench",
         value:
-          "Perawatan yang konsisten setelah peluncuran, agar masalah kecil diperbaiki sebelum menjadi darurat dan produk terus meningkat.",
+          "Maintenance yang konsisten setelah launch, agar masalah kecil diperbaiki sebelum menjadi darurat dan produk terus berkembang.",
         offerings: [
-          "Pemeliharaan website",
+          "Maintenance website",
           "Perbaikan bug",
           "Optimasi performa",
         ],
@@ -174,99 +174,99 @@ export const id = {
   },
   process: {
     label: "Proses",
-    heading: "Jalur yang jelas dari kebutuhan hingga produksi.",
+    heading: "Jalur yang jelas dari kebutuhan hingga production.",
     intro:
-      "Tanpa kotak hitam. Setiap tahap memiliki keluaran yang jelas, dan Anda melihat pekerjaan berlangsung.",
-    output: "Keluaran",
+      "Tanpa black box. Setiap tahap punya output yang jelas, dan Anda melihat pekerjaan berlangsung.",
+    output: "Output",
     closing:
-      "Ruang lingkup disepakati sebelum pekerjaan dimulai. Perubahan dibahas terbuka, diberi harga yang jujur, dan tidak pernah diselipkan diam-diam.",
+      "Scope disepakati sebelum pekerjaan dimulai. Perubahan dibahas terbuka, diberi harga yang jujur, dan tidak pernah diselipkan diam-diam.",
     stages: [
       {
         index: "01",
-        title: "Eksplorasi",
+        title: "Discovery",
         description:
-          "Kami mulai dari bisnis, pengguna, dan batasan yang ada. Tujuannya adalah memahami seperti apa keberhasilan sebelum mengusulkan satu fitur pun.",
-        deliverables: ["Ringkasan proyek", "Kriteria keberhasilan"],
+          "Kami mulai dari bisnis, pengguna, dan batasan yang ada. Tujuannya memahami seperti apa keberhasilan sebelum mengusulkan satu fitur pun.",
+        deliverables: ["Project brief", "Kriteria keberhasilan"],
       },
       {
         index: "02",
-        title: "Perencanaan",
+        title: "Planning",
         description:
-          "Ruang lingkup, arsitektur, dan tonggak pencapaian ditetapkan bersama. Anda mendapatkan gambaran jelas tentang apa yang akan dibangun, dalam urutan apa, dan mengapa.",
+          "Scope, arsitektur, dan milestone ditetapkan bersama. Anda mendapat gambaran jelas tentang apa yang akan dibangun, dalam urutan apa, dan mengapa.",
         deliverables: [
-          "Ruang lingkup & tonggak",
+          "Scope & milestone",
           "Model data",
           "Rencana teknis",
         ],
       },
       {
         index: "03",
-        title: "Pengembangan",
+        title: "Development",
         description:
-          "Produk dibangun dalam penambahan yang dapat ditinjau. Pratinjau yang berfungsi tersedia di setiap titik pemeriksaan, sehingga masukan datang saat perbaikan masih murah.",
+          "Produk dibangun dalam increment yang bisa direview. Preview yang berfungsi tersedia di setiap checkpoint, sehingga feedback datang saat perbaikan masih murah.",
         deliverables: [
-          "Sistem antarmuka",
+          "Sistem interface",
           "Build yang berfungsi",
-          "Tinjauan kualitas",
+          "Quality review",
         ],
       },
       {
         index: "04",
-        title: "Peluncuran",
+        title: "Launch",
         description:
-          "Peluncuran ditangani sebagai tugas rekayasa, bukan tambahan belakangan: performa, metadata, analitik, dan serah terima yang benar-benar dapat digunakan.",
+          "Launch ditangani sebagai tugas engineering, bukan tambahan belakangan: performa, metadata, analytics, dan handover yang benar-benar bisa dipakai.",
         deliverables: [
-          "Peluncuran produksi",
+          "Production launch",
           "Dokumentasi",
-          "Serah terima",
+          "Handover",
         ],
       },
       {
         index: "05",
-        title: "Dukungan",
+        title: "Support",
         description:
           "Setelah rilis, kami tetap tersedia untuk perbaikan, peningkatan, dan iterasi terukur seiring perubahan kebutuhan bisnis.",
-        deliverables: ["Pemantauan", "Perbaikan bug", "Iterasi"],
+        deliverables: ["Monitoring", "Perbaikan bug", "Iterasi"],
       },
     ],
   },
   about: {
     label: "Tentang MAFYN",
-    heading: "Rekayasa yang berangkat dari kebutuhan bisnis.",
+    heading: "Engineering yang berangkat dari kebutuhan bisnis.",
     statement:
-      "MAFYN berfokus membangun solusi digital praktis melalui rekayasa yang cermat, arsitektur yang bersih, dan pengembangan yang berorientasi bisnis.",
+      "MAFYN berfokus membangun solusi digital praktis melalui engineering yang cermat, arsitektur yang bersih, dan development yang berorientasi bisnis.",
     paragraphs: [
       "Studio ini sengaja dibuat kecil. Artinya, lebih sedikit proyek dalam satu waktu, kolaborasi langsung dengan orang yang menulis kode, dan keputusan yang diambil dengan konteks penuh—bukan diteruskan antar departemen.",
-      "Kami tidak mengklaim rekam jejak yang panjang. Kami membawa rekayasa yang terfokus, perencanaan yang jujur, dan perangkat lunak yang ditulis untuk tetap dipelihara setelah peluncuran.",
+      "Kami tidak mengklaim rekam jejak yang panjang. Kami membawa engineering yang fokus, perencanaan yang jujur, dan software yang ditulis untuk tetap maintainable setelah launch.",
     ],
     howWeWorkLabel: "Cara kami bekerja",
     howWeWork:
-      "Anda bekerja langsung dengan developer yang membangun produk Anda, mulai dari eksplorasi hingga peluncuran dan dukungan. Tanpa lapisan akun. Tanpa kebutuhan yang terencerkan.",
+      "Anda bekerja langsung dengan developer yang membangun produk Anda, mulai dari discovery hingga launch dan support. Tanpa account layer. Tanpa kebutuhan yang terencerkan.",
     principlesLabel: "Prinsip",
     principles: [
       {
         index: "01",
         title: "Kejelasan sebelum kode",
         description:
-          "Jika masalahnya tidak terdefinisi, perangkat lunak tidak akan menyelesaikannya. Kami menyepakati hasil sebelum menulis implementasi.",
+          "Jika masalahnya tidak terdefinisi, software tidak akan menyelesaikannya. Kami menyepakati hasil sebelum menulis implementasi.",
       },
       {
         index: "02",
         title: "Arsitektur yang bertahan",
         description:
-          "Struktur sederhana dan terdokumentasi yang dapat dibaca, dikembangkan, dan dipelihara oleh developer berikutnya tanpa menebak-nebak.",
+          "Struktur sederhana dan terdokumentasi yang bisa dibaca, dikembangkan, dan di-maintain oleh developer berikutnya tanpa menebak-nebak.",
       },
       {
         index: "03",
         title: "Keputusan yang mengutamakan bisnis",
         description:
-          "Setiap kompromi teknis diukur terhadap nilai nyata: waktu yang dihemat, pendapatan yang diperoleh, risiko yang dikurangi.",
+          "Setiap trade-off teknis diukur terhadap nilai nyata: waktu yang dihemat, pendapatan yang diperoleh, risiko yang dikurangi.",
       },
       {
         index: "04",
         title: "Komunikasi langsung",
         description:
-          "Bahasa yang jelas, kemajuan yang terlihat, dan tenggat yang jujur. Tanpa lapisan, tanpa kejutan, tanpa jargon sebagai tameng.",
+          "Bahasa yang jelas, progres yang terlihat, dan tenggat yang jujur. Tanpa lapisan, tanpa kejutan, tanpa jargon sebagai tameng.",
       },
     ],
   },
@@ -310,11 +310,11 @@ export const id = {
       honeypot: "Biarkan kolom ini kosong",
       projectTypes: [
         { value: "Website", label: "Website" },
-        { value: "Web application", label: "Aplikasi web" },
+        { value: "Web application", label: "Web app" },
         { value: "Backend / API", label: "Backend / API" },
         {
           value: "Maintenance & support",
-          label: "Pemeliharaan & dukungan",
+          label: "Maintenance & support",
         },
         { value: "Not sure", label: "Belum yakin" },
       ],
@@ -356,6 +356,6 @@ export const id = {
     indonesia: "Indonesia",
     workingWorldwide: "Bekerja secara global",
     rights: "Seluruh hak cipta dilindungi.",
-    descriptor: "Pengembangan full-stack & aplikasi web kustom",
+    descriptor: "Full-stack development & web app custom",
   },
 } satisfies Dictionary;

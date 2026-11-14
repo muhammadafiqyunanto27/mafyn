@@ -1,6 +1,7 @@
 import { Mail, MapPin, MessageSquare } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Wordmark } from "@/components/ui/wordmark";
+import { Reveal } from "@/components/ui/reveal";
 import { site } from "@/content/site";
 import { servicePagePath, type ServicePageKey } from "@/content/service-pages";
 import type { Dictionary } from "@/content/types";
@@ -23,8 +24,8 @@ export function SiteFooter({ locale, dict, homeHref = "" }: SiteFooterProps) {
   return (
     <footer className="section-dark" aria-labelledby="footer-heading">
       <div className="container-page pt-14 pb-8 md:pt-20">
-        <div className="grid gap-10 md:grid-cols-12 md:gap-8">
-          <div className="md:col-span-5">
+        <div className="grid gap-10 md:grid-cols-2 md:gap-8 lg:grid-cols-12">
+          <Reveal className="md:col-span-2 lg:col-span-5">
             <div id="footer-heading">
               <Wordmark descriptor="Studio" />
             </div>
@@ -43,87 +44,95 @@ export function SiteFooter({ locale, dict, homeHref = "" }: SiteFooterProps) {
               <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-lime" />
               {dict.brand.tagline}
             </p>
-          </div>
+          </Reveal>
 
-          <nav aria-label={dict.a11y.footerNav} className="md:col-span-3">
-            <p className="label text-fg-subtle">{dict.footer.navigate}</p>
-            <ul className="mt-4 space-y-2.5">
-              {dict.nav.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={`${homeHref}${item.href}`}
-                    className="text-sm text-fg-muted transition-colors hover:text-fg"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className="md:col-span-2">
-            <p className="label text-fg-subtle">{dict.footer.services}</p>
-            <ul className="mt-4 space-y-2.5">
-              {dict.services.items.map((service, index) => {
-                const key = footerServiceKeys[index];
-                return (
-                  <li key={service.index}>
+          <Reveal delay={80} className="md:col-span-1 lg:col-span-3">
+            <nav aria-label={dict.a11y.footerNav}>
+              <p className="label text-fg-subtle">{dict.footer.navigate}</p>
+              <ul className="mt-4 space-y-2.5">
+                {dict.nav.map((item) => (
+                  <li key={item.href}>
                     <a
-                      href={
-                        key
-                          ? servicePagePath(locale, key)
-                          : `${homeHref}#services`
-                      }
+                      href={`${homeHref}${item.href}`}
                       className="text-sm text-fg-muted transition-colors hover:text-fg"
                     >
-                      {service.title}
+                      {item.label}
                     </a>
                   </li>
-                );
-              })}
-            </ul>
-          </div>
+                ))}
+              </ul>
+            </nav>
+          </Reveal>
 
-          <div className="md:col-span-2">
-            <p className="label text-fg-subtle">{dict.footer.contact}</p>
-            <ul className="mt-4 space-y-2.5 text-sm text-fg-muted">
-              <li>
-                <a
-                  href={`mailto:${site.email}`}
-                  className="inline-flex items-center gap-2 transition-colors hover:text-fg"
-                >
-                  <Mail aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.6} />
-                  {site.email}
-                </a>
-              </li>
-              <li className="flex items-start gap-2">
-                <MessageSquare
-                  aria-hidden="true"
-                  className="mt-0.5 h-3.5 w-3.5 shrink-0"
-                  strokeWidth={1.6}
-                />
-                <span>
-                  {site.whatsapp}
-                  <span className="mt-1 block text-[0.6875rem] text-fg-subtle">
-                    {dict.footer.placeholder}
+          <Reveal delay={140} className="md:col-span-2">
+            <div>
+              <p className="label text-fg-subtle">{dict.footer.services}</p>
+              <ul className="mt-4 space-y-2.5">
+                {dict.services.items.map((service, index) => {
+                  const key = footerServiceKeys[index];
+                  return (
+                    <li key={service.index}>
+                      <a
+                        href={
+                          key
+                            ? servicePagePath(locale, key)
+                            : `${homeHref}#services`
+                        }
+                        className="text-sm text-fg-muted transition-colors hover:text-fg"
+                      >
+                        {service.title}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </Reveal>
+
+          <Reveal delay={200} className="md:col-span-2">
+            <div>
+              <p className="label text-fg-subtle">{dict.footer.contact}</p>
+              <ul className="mt-4 space-y-2.5 text-sm text-fg-muted">
+                <li>
+                  <a
+                    href={`mailto:${site.email}`}
+                    className="inline-flex items-center gap-2 transition-colors hover:text-fg break-all"
+                  >
+                    <Mail aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.6} />
+                    {site.email}
+                  </a>
+                </li>
+                <li className="flex items-start gap-2">
+                  <MessageSquare
+                    aria-hidden="true"
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0"
+                    strokeWidth={1.6}
+                  />
+                  <a
+                    href={`https://wa.me/${site.whatsapp.replace(/[^0-9]/g, "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 transition-colors hover:text-fg"
+                  >
+                    {site.whatsapp}
+                  </a>
+                </li>
+                <li className="flex items-start gap-2">
+                  <MapPin
+                    aria-hidden="true"
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0"
+                    strokeWidth={1.6}
+                  />
+                  <span>
+                    {dict.footer.indonesia}
+                    <span className="mt-1 block text-[0.6875rem] text-fg-subtle">
+                      {dict.footer.workingWorldwide}
+                    </span>
                   </span>
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin
-                  aria-hidden="true"
-                  className="mt-0.5 h-3.5 w-3.5 shrink-0"
-                  strokeWidth={1.6}
-                />
-                <span>
-                  {dict.footer.indonesia}
-                  <span className="mt-1 block text-[0.6875rem] text-fg-subtle">
-                    {dict.footer.workingWorldwide}
-                  </span>
-                </span>
-              </li>
-            </ul>
-          </div>
+                </li>
+              </ul>
+            </div>
+          </Reveal>
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-between">

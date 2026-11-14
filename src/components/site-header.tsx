@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Wordmark } from "@/components/ui/wordmark";
@@ -131,9 +132,16 @@ export function SiteHeader({ locale, dict, homeHref = "" }: SiteHeaderProps) {
             aria-label={dict.a11y.mobileNav}
             className="flex-1 overflow-y-auto px-[var(--gutter)] py-6"
           >
-            <ul className="flex flex-col">
+            <ul
+              key={open ? "open" : "closed"}
+              className="flex flex-col"
+            >
               {dict.nav.map((item, index) => (
-                <li key={item.href} className="border-b border-line">
+                <li
+                  key={item.href}
+                  className="border-b border-line enter"
+                  style={{ "--enter-delay": `${index * 60}ms` } as CSSProperties}
+                >
                   <a
                     href={`${homeHref}${item.href}`}
                     onClick={() => setOpen(false)}

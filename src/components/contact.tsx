@@ -1,6 +1,7 @@
 import { Mail, MapPin, MessageSquare } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
 import { site } from "@/content/site";
+import { Reveal } from "@/components/ui/reveal";
 import type { Dictionary } from "@/content/types";
 import type { Locale } from "@/i18n/config";
 
@@ -21,7 +22,7 @@ export function Contact({ locale, dict }: ContactProps) {
       icon: MessageSquare,
       label: dict.contact.whatsappLabel,
       value: site.whatsapp,
-      href: null,
+      href: `https://wa.me/${site.whatsapp.replace(/\D/g, "")}`,
     },
     {
       icon: MapPin,
@@ -50,60 +51,67 @@ export function Contact({ locale, dict }: ContactProps) {
 
         <div className="mt-6 grid gap-10 md:mt-8 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-5">
-            <h2
-              id="contact-heading"
-              className="display-section max-w-[16ch]"
-            >
-              {dict.contact.heading}
-            </h2>
+            <Reveal>
+              <h2
+                id="contact-heading"
+                className="display-section max-w-[16ch]"
+              >
+                {dict.contact.heading}
+              </h2>
+            </Reveal>
 
-            <p className="mt-5 max-w-[46ch] text-[0.9375rem] leading-relaxed text-fg-muted">
-              {dict.contact.intro}
-            </p>
+            <Reveal delay={80}>
+              <p className="mt-5 max-w-[46ch] text-[0.9375rem] leading-relaxed text-fg-muted">
+                {dict.contact.intro}
+              </p>
+            </Reveal>
 
-            <dl className="mt-8 border-t border-line">
-              {rows.map(({ icon: Icon, label, value, href }) => (
-                <div
-                  key={label}
-                  className="flex items-start gap-3 border-b border-line py-4"
-                >
-                  <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-[0.625rem] border border-line bg-surface">
-                    <Icon
-                      aria-hidden="true"
-                      className="h-4 w-4 text-fg-muted"
-                      strokeWidth={1.6}
-                    />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <dt className="label text-fg-subtle">{label}</dt>
-                    <dd className="mt-1 flex flex-wrap items-center gap-2 text-sm font-medium">
-                      {href ? (
-                        <a href={href} className="link-underline">
-                          {value}
-                        </a>
-                      ) : (
-                        <span>{value}</span>
-                      )}
-                      {label === dict.contact.whatsappLabel && (
-                        <span className="chip">{dict.contact.placeholder}</span>
-                      )}
-                    </dd>
+            <Reveal delay={140}>
+              <dl className="mt-8 border-t border-line">
+                {rows.map(({ icon: Icon, label, value, href }) => (
+                  <div
+                    key={label}
+                    className="flex items-start gap-3 border-b border-line py-4"
+                  >
+                    <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-[0.625rem] border border-line bg-surface">
+                      <Icon
+                        aria-hidden="true"
+                        className="h-4 w-4 text-fg-muted"
+                        strokeWidth={1.6}
+                      />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <dt className="label text-fg-subtle">{label}</dt>
+                      <dd className="mt-1 flex flex-wrap items-center gap-2 text-sm font-medium">
+                        {href ? (
+                          <a href={href} className="link-underline">
+                            {value}
+                          </a>
+                        ) : (
+                          <span>{value}</span>
+                        )}
+                      </dd>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </dl>
+                ))}
+              </dl>
+            </Reveal>
 
-            <p className="mt-5 max-w-[46ch] text-xs leading-relaxed text-fg-subtle">
-              {dict.contact.directNote}
-            </p>
+            <Reveal delay={200}>
+              <p className="mt-5 max-w-[46ch] text-xs leading-relaxed text-fg-subtle">
+                {dict.contact.directNote}
+              </p>
+            </Reveal>
           </div>
 
           <div className="md:col-span-7">
-            <ContactForm
-              locale={locale}
-              copy={dict.contact.form}
-              email={site.email}
-            />
+            <Reveal delay={120}>
+              <ContactForm
+                locale={locale}
+                copy={dict.contact.form}
+                email={site.email}
+              />
+            </Reveal>
           </div>
         </div>
       </div>

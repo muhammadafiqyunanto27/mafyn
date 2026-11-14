@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { SectionHeader } from "@/components/ui/section-header";
 import { servicePagePath } from "@/content/service-pages";
+import { Reveal } from "@/components/ui/reveal";
 import type { Dictionary, ServiceIcon } from "@/content/types";
 import type { Locale } from "@/i18n/config";
 
@@ -100,24 +101,25 @@ export function Services({
               </>
             );
 
-            const boxClass = `card flex min-h-[15rem] flex-col p-6 sm:p-7 lg:min-h-[17rem] ${spans[index] ?? ""}`;
+            const boxClass = `card flex h-full min-h-[15rem] flex-col p-6 sm:p-7 lg:min-h-[17rem]`;
 
             if (!href) {
               return (
-                <article key={service.index} className={boxClass}>
-                  {content}
-                </article>
+                <Reveal key={service.index} delay={index * 90} className={spans[index]}>
+                  <article className={boxClass}>{content}</article>
+                </Reveal>
               );
             }
 
             return (
-              <a
-                key={service.index}
-                href={href}
-                className={`${boxClass} card-interactive group`}
-              >
-                {content}
-              </a>
+              <Reveal key={service.index} delay={index * 90} className={spans[index]}>
+                <a
+                  href={href}
+                  className={`${boxClass} card-interactive group`}
+                >
+                  {content}
+                </a>
+              </Reveal>
             );
           })}
         </div>

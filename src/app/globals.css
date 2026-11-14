@@ -43,8 +43,8 @@
   --radius-xl: 2rem;
 
   /* Rhythm */
-  --space-section: clamp(4.5rem, 8vw, 7.5rem);
-  --space-block: clamp(2rem, 3.5vw, 3rem);
+  --space-section: clamp(4rem, 7vw, 6.5rem);
+  --space-block: clamp(1.75rem, 3vw, 2.5rem);
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
 }
 

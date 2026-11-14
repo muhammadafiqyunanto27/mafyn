@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "@/components/ui/section-header";
+import { Reveal } from "@/components/ui/reveal";
 import { getProjects, type LocalizedProject } from "@/content/projects";
 import type { Dictionary } from "@/content/types";
 import type { Locale } from "@/i18n/config";
@@ -148,9 +149,6 @@ function ProjectVisual({
           <div className="absolute inset-0">
             <Preview />
           </div>
-          <span className="label absolute right-4 top-4 rounded-md bg-deep-green/70 px-2 py-1 text-butter/55 backdrop-blur">
-            {String(index + 1).padStart(2, "0")}
-          </span>
         </>
       )}
     </div>
@@ -276,14 +274,14 @@ export function Work({ locale, dict }: { locale: Locale; dict: Dictionary }) {
                 : "lg:col-span-5";
 
             return (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                copy={dict.work}
-                index={index}
-                wide={wide}
-                className={span}
-              />
+              <Reveal key={project.id} delay={index * 100} className={span}>
+                <ProjectCard
+                  project={project}
+                  copy={dict.work}
+                  index={index}
+                  wide={wide}
+                />
+              </Reveal>
             );
           })}
         </div>

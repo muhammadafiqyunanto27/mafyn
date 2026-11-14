@@ -7,7 +7,7 @@
 export const site = {
   name: "MAFYN",
   domain: "mafyn.web.id",
-  url: "https://mafyn.web.id",
-  email: "hello@mafyn.web.id",
-  whatsapp: "+62 8XX-XXXX-XXXX",
+  url: "https://www.mafyn.web.id",
+  email: "muhammadafiqyunanto@gmail.com",
+  whatsapp: "+62 822 1978 5260",
 } as const;

@@ -2,9 +2,24 @@ import { Mail, MapPin, MessageSquare } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Wordmark } from "@/components/ui/wordmark";
 import { site } from "@/content/site";
+import { servicePagePath, type ServicePageKey } from "@/content/service-pages";
 import type { Dictionary } from "@/content/types";
+import type { Locale } from "@/i18n/config";
 
-export function SiteFooter({ dict }: { dict: Dictionary }) {
+const footerServiceKeys: (ServicePageKey | null)[] = [
+  "website",
+  "webapp",
+  "backend",
+  null,
+];
+
+type SiteFooterProps = {
+  locale: Locale;
+  dict: Dictionary;
+  homeHref?: string;
+};
+
+export function SiteFooter({ locale, dict, homeHref = "" }: SiteFooterProps) {
   return (
     <footer className="section-dark" aria-labelledby="footer-heading">
       <div className="container-page pt-14 pb-8 md:pt-20">
@@ -19,7 +34,7 @@ export function SiteFooter({ dict }: { dict: Dictionary }) {
             </p>
 
             <div className="mt-6">
-              <ButtonLink href="#contact" size="sm">
+              <ButtonLink href={`${homeHref}#contact`} size="sm">
                 {dict.header.startConversation}
               </ButtonLink>
             </div>
@@ -36,7 +51,7 @@ export function SiteFooter({ dict }: { dict: Dictionary }) {
               {dict.nav.map((item) => (
                 <li key={item.href}>
                   <a
-                    href={item.href}
+                    href={`${homeHref}${item.href}`}
                     className="text-sm text-fg-muted transition-colors hover:text-fg"
                   >
                     {item.label}
@@ -49,16 +64,23 @@ export function SiteFooter({ dict }: { dict: Dictionary }) {
           <div className="md:col-span-2">
             <p className="label text-fg-subtle">{dict.footer.services}</p>
             <ul className="mt-4 space-y-2.5">
-              {dict.services.items.map((service) => (
-                <li key={service.index}>
-                  <a
-                    href="#services"
-                    className="text-sm text-fg-muted transition-colors hover:text-fg"
-                  >
-                    {service.title}
-                  </a>
-                </li>
-              ))}
+              {dict.services.items.map((service, index) => {
+                const key = footerServiceKeys[index];
+                return (
+                  <li key={service.index}>
+                    <a
+                      href={
+                        key
+                          ? servicePagePath(locale, key)
+                          : `${homeHref}#services`
+                      }
+                      className="text-sm text-fg-muted transition-colors hover:text-fg"
+                    >
+                      {service.title}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

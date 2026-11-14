@@ -14,6 +14,7 @@ import {
 } from "@/i18n/config";
 import { site } from "@/content/site";
 import { themeScript } from "@/lib/theme";
+import { buildPageMetadata } from "@/lib/seo";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -52,59 +53,31 @@ export async function generateMetadata({
 
   const dict = getDictionary(value);
   const canonical = `/${value}`;
-  const languages = {
-    en: "/en",
-    id: "/id",
-    "x-default": "/en",
-  };
 
   return {
-    metadataBase: new URL(site.url),
+    ...buildPageMetadata({
+      title: dict.meta.title,
+      description: dict.meta.description,
+      keywords: dict.meta.keywords,
+      path: canonical,
+      languages: {
+        en: "/en",
+        id: "/id",
+        "x-default": "/en",
+      },
+      ogAlt: dict.meta.ogAlt,
+      ogLocale: dict.meta.ogLocale,
+      alternateOgLocale: dict.meta.alternateOgLocale,
+    }),
     title: {
       default: dict.meta.title,
       template: `%s — ${site.name}`,
     },
-    description: dict.meta.description,
     applicationName: site.name,
-    keywords: dict.meta.keywords,
-    authors: [{ name: site.name }],
+    authors: [{ name: site.name, url: site.url }],
     creator: site.name,
     publisher: site.name,
-    alternates: { canonical, languages },
     category: "technology",
-    openGraph: {
-      type: "website",
-      locale: dict.meta.ogLocale,
-      alternateLocale: [dict.meta.alternateOgLocale],
-      url: canonical,
-      siteName: site.name,
-      title: dict.meta.title,
-      description: dict.meta.description,
-      images: [
-        {
-          url: "/opengraph-image",
-          width: 1200,
-          height: 630,
-          alt: dict.meta.ogAlt,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: dict.meta.title,
-      description: dict.meta.description,
-      images: ["/opengraph-image"],
-    },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-      },
-    },
   };
 }
 

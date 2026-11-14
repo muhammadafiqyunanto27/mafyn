@@ -10,7 +10,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { BackToTop } from "@/components/ui/back-to-top";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { site } from "@/content/site";
+import { buildStructuredData } from "@/lib/structured-data";
 
 type HomeProps = {
   params: Promise<{ locale: string }>;
@@ -23,46 +23,24 @@ export default async function Home({ params }: HomeProps) {
 
   const dict = getDictionary(value);
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "@id": `${site.url}/#studio`,
-    name: site.name,
-    url: `${site.url}/${value}`,
-    description: dict.meta.description,
-    slogan: dict.brand.tagline,
-    inLanguage: dict.meta.inLanguage,
-    areaServed: [
-      { "@type": "Country", name: "Indonesia" },
-      dict.meta.areaServedWorldwide,
-    ],
-    knowsAbout: dict.meta.knowsAbout,
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: dict.meta.offerCatalog,
-      itemListElement: dict.services.items.map((service) => ({
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: service.title,
-          description: service.value,
-        },
-      })),
-    },
-  };
+  const structuredData = buildStructuredData({
+    locale: value,
+    dict,
+    path: `/${value}`,
+  });
 
   return (
     <>
       <SiteHeader locale={value} dict={dict} />
       <main id="main">
         <Hero dict={dict} />
-        <Services dict={dict} />
+        <Services locale={value} dict={dict} />
         <Work locale={value} dict={dict} />
         <Process dict={dict} />
         <About dict={dict} />
         <Contact locale={value} dict={dict} />
       </main>
-      <SiteFooter dict={dict} />
+      <SiteFooter locale={value} dict={dict} />
       <BackToTop label={dict.a11y.backToTop} />
       <script
         type="application/ld+json"

@@ -13,9 +13,10 @@ import type { Locale } from "@/i18n/config";
 type SiteHeaderProps = {
   locale: Locale;
   dict: Dictionary;
+  homeHref?: string;
 };
 
-export function SiteHeader({ locale, dict }: SiteHeaderProps) {
+export function SiteHeader({ locale, dict, homeHref = "" }: SiteHeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -53,7 +54,7 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
     >
       <div className="container-page flex h-[4.75rem] items-center justify-between gap-6">
         <a
-          href="#top"
+          href={`${homeHref}#top`}
           aria-label={`${site.name} — ${dict.a11y.backToTop}`}
           className="shrink-0 rounded-[0.625rem] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg"
         >
@@ -67,7 +68,7 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
           {dict.nav.map((item) => (
             <a
               key={item.href}
-              href={item.href}
+              href={`${homeHref}${item.href}`}
               className="rounded-full px-3.5 py-2 text-sm font-medium text-fg-muted transition-colors duration-150 hover:bg-surface hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
             >
               {item.label}
@@ -86,7 +87,7 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
           </div>
 
           <ButtonLink
-            href="#contact"
+            href={`${homeHref}#contact`}
             size="sm"
             className="hidden sm:inline-flex"
           >
@@ -134,7 +135,7 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
               {dict.nav.map((item, index) => (
                 <li key={item.href} className="border-b border-line">
                   <a
-                    href={item.href}
+                    href={`${homeHref}${item.href}`}
                     onClick={() => setOpen(false)}
                     className="flex items-center justify-between gap-4 py-4"
                   >
@@ -176,7 +177,7 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
 
           <div className="shrink-0 border-t border-line px-[var(--gutter)] py-5">
             <ButtonLink
-              href="#contact"
+              href={`${homeHref}#contact`}
               size="lg"
               className="w-full"
             >

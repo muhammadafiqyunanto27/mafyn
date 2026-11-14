@@ -7,7 +7,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { SectionHeader } from "@/components/ui/section-header";
+import { servicePagePath } from "@/content/service-pages";
 import type { Dictionary, ServiceIcon } from "@/content/types";
+import type { Locale } from "@/i18n/config";
 
 const icons: Record<ServiceIcon, LucideIcon> = {
   layout: LayoutTemplate,
@@ -23,7 +25,16 @@ const spans = [
   "lg:col-span-7",
 ];
 
-export function Services({ dict }: { dict: Dictionary }) {
+/** Maps the four dictionary services to localized service pages where one exists. */
+const pageKeys = ["website", "webapp", "backend", null] as const;
+
+export function Services({
+  locale,
+  dict,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+}) {
   return (
     <section
       id="services"
@@ -41,12 +52,11 @@ export function Services({ dict }: { dict: Dictionary }) {
         <div className="mt-10 grid gap-4 md:grid-cols-2 md:gap-5 lg:mt-14 lg:grid-cols-12">
           {dict.services.items.map((service, index) => {
             const Icon = icons[service.icon];
+            const pageKey = pageKeys[index] ?? null;
+            const href = pageKey ? servicePagePath(locale, pageKey) : null;
 
-            return (
-              <article
-                key={service.index}
-                className={`card card-interactive group flex min-h-[15rem] flex-col p-6 sm:p-7 lg:min-h-[17rem] ${spans[index] ?? ""}`}
-              >
+            const content = (
+              <>
                 <div className="flex items-start justify-between gap-4">
                   <span className="grid h-11 w-11 place-items-center rounded-[0.875rem] bg-lime text-forest">
                     <Icon
@@ -79,13 +89,35 @@ export function Services({ dict }: { dict: Dictionary }) {
                       </li>
                     ))}
                   </ul>
-                  <ArrowUpRight
-                    aria-hidden="true"
-                    className="h-4 w-4 shrink-0 text-fg-subtle transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-fg"
-                    strokeWidth={1.6}
-                  />
+                  {href && (
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="h-4 w-4 shrink-0 text-fg-subtle transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-fg"
+                      strokeWidth={1.6}
+                    />
+                  )}
                 </div>
-              </article>
+              </>
+            );
+
+            const boxClass = `card flex min-h-[15rem] flex-col p-6 sm:p-7 lg:min-h-[17rem] ${spans[index] ?? ""}`;
+
+            if (!href) {
+              return (
+                <article key={service.index} className={boxClass}>
+                  {content}
+                </article>
+              );
+            }
+
+            return (
+              <a
+                key={service.index}
+                href={href}
+                className={`${boxClass} card-interactive group`}
+              >
+                {content}
+              </a>
             );
           })}
         </div>

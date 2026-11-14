@@ -1,29 +1,41 @@
 import type { MetadataRoute } from "next";
-import { site } from "@/content/site";
+import {
+  serviceKeys,
+  servicePagePath,
+  serviceLanguageAlternates,
+} from "@/content/service-pages";
+import { absoluteUrl } from "@/lib/seo";
+import { locales } from "@/i18n/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: `${site.url}/en`,
-      changeFrequency: "monthly",
-      priority: 1,
+  const homeAlternates = {
+    en: absoluteUrl("/en"),
+    id: absoluteUrl("/id"),
+    "x-default": absoluteUrl("/en"),
+  };
+
+  const homeEntries: MetadataRoute.Sitemap = locales.map((locale) => ({
+    url: absoluteUrl(`/${locale}`),
+    changeFrequency: "monthly",
+    priority: 1,
+    alternates: { languages: homeAlternates },
+  }));
+
+  const serviceEntries: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    serviceKeys.map((key) => ({
+      url: absoluteUrl(servicePagePath(locale, key)),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
       alternates: {
-        languages: {
-          en: `${site.url}/en`,
-          id: `${site.url}/id`,
-        },
+        languages: Object.fromEntries(
+          Object.entries(serviceLanguageAlternates(key)).map(([lang, path]) => [
+            lang,
+            absoluteUrl(path),
+          ]),
+        ),
       },
-    },
-    {
-      url: `${site.url}/id`,
-      changeFrequency: "monthly",
-      priority: 1,
-      alternates: {
-        languages: {
-          en: `${site.url}/en`,
-          id: `${site.url}/id`,
-        },
-      },
-    },
-  ];
+    })),
+  );
+
+  return [...homeEntries, ...serviceEntries];
 }

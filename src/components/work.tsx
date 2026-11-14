@@ -148,7 +148,7 @@ function ProjectVisual({
           <div className="absolute inset-0">
             <Preview />
           </div>
-          <span className="label absolute right-4 top-4 text-butter/40">
+          <span className="label absolute right-4 top-4 rounded-md bg-deep-green/70 px-2 py-1 text-butter/55 backdrop-blur">
             {String(index + 1).padStart(2, "0")}
           </span>
         </>

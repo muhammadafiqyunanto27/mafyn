@@ -53,7 +53,7 @@ function applyPreference(preference: ThemePreference) {
   document
     .querySelectorAll('meta[name="theme-color"]')
     .forEach((meta) =>
-      meta.setAttribute("content", dark ? "#111318" : "#F4F4F2"),
+      meta.setAttribute("content", dark ? "#142D26" : "#F5F1E5"),
     );
 }
 
@@ -123,7 +123,9 @@ export function ThemeSwitch({ labels, variant = "compact" }: ThemeSwitchProps) {
     <div
       role="group"
       aria-label={labels.label}
-      className={`flex border border-fg/20 ${expanded ? "w-full" : ""}`}
+      className={`inline-flex border border-line-strong rounded-full p-0.5 ${
+        expanded ? "w-full" : ""
+      }`}
     >
       {options.map(({ value, icon: Icon, labelKey }) => {
         const active = mounted && preference === value;
@@ -135,14 +137,14 @@ export function ThemeSwitch({ labels, variant = "compact" }: ThemeSwitchProps) {
             onClick={() => choose(value)}
             aria-pressed={mounted ? active : undefined}
             title={labels[labelKey]}
-            className={`flex items-center justify-center gap-1.5 transition-colors duration-150 ${
+            className={`flex items-center justify-center gap-1.5 rounded-full transition-colors duration-150 ${
               active
                 ? "bg-fg text-canvas"
-                : "text-fg/55 hover:bg-fg/10 hover:text-fg"
+                : "text-fg-muted hover:bg-surface hover:text-fg"
             } ${
               expanded
-                ? "h-11 flex-1 px-3 text-[0.6875rem] font-medium"
-                : "h-9 w-9"
+                ? "h-10 flex-1 px-3 text-xs font-medium"
+                : "h-8 w-8"
             }`}
           >
             <Icon

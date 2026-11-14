@@ -5,6 +5,7 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Wordmark } from "@/components/ui/wordmark";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { LanguageSwitch } from "@/components/language-switch";
+import { ButtonLink } from "@/components/ui/button-link";
 import { site } from "@/content/site";
 import type { Dictionary } from "@/content/types";
 import type { Locale } from "@/i18n/config";
@@ -20,7 +21,7 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -42,71 +43,64 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
     };
   }, [open]);
 
-  const themeLabels = {
-    label: dict.a11y.theme,
-    ...dict.theme,
-  };
-
   return (
     <header
-      className={`sticky top-0 z-50 border-b bg-canvas transition-colors duration-200 ${
-        scrolled ? "border-fg/15" : "border-transparent"
+      className={`sticky top-0 z-50 transition-colors duration-200 ${
+        scrolled
+          ? "border-b border-line bg-canvas/92 backdrop-blur-md"
+          : "border-b border-transparent bg-canvas"
       }`}
     >
-      <div className="container-page flex h-[4.25rem] items-center justify-between gap-4 lg:h-[4.75rem]">
+      <div className="container-page flex h-[4.75rem] items-center justify-between gap-6">
         <a
           href="#top"
-          aria-label={dict.a11y.backToTop}
-          className="shrink-0"
+          aria-label={`${site.name} — ${dict.a11y.backToTop}`}
+          className="shrink-0 rounded-[0.625rem] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fg"
         >
-          <Wordmark descriptor={dict.brand.descriptor} />
+          <Wordmark descriptor="Studio" />
         </a>
 
-        <nav aria-label={dict.a11y.primaryNav} className="ml-auto hidden lg:block">
-          <ul className="flex items-center gap-5 xl:gap-7">
-            {dict.nav.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="group relative inline-block py-2 text-[0.8125rem] font-medium text-fg/70 transition-colors duration-150 hover:text-fg"
-                >
-                  {item.label}
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-x-0 bottom-0.5 h-px origin-left scale-x-0 bg-fg transition-transform duration-200 group-hover:scale-x-100 group-focus-visible:scale-x-100"
-                  />
-                </a>
-              </li>
-            ))}
-          </ul>
+        <nav
+          aria-label={dict.a11y.primaryNav}
+          className="hidden items-center gap-1 lg:flex"
+        >
+          {dict.nav.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="rounded-full px-3.5 py-2 text-sm font-medium text-fg-muted transition-colors duration-150 hover:bg-surface hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className="flex items-center gap-2">
           <div className="hidden items-center gap-2 lg:flex">
-            <ThemeSwitch labels={themeLabels} />
-            <LanguageSwitch locale={locale} label={dict.a11y.language} />
+            <ThemeSwitch labels={{ ...dict.theme, label: dict.a11y.theme }} />
+            <LanguageSwitch
+              locale={locale}
+              label={dict.a11y.language}
+              variant="compact"
+            />
           </div>
 
-          <a
+          <ButtonLink
             href="#contact"
-            className="group hidden items-center gap-2 bg-fg px-4 py-2.5 text-[0.8125rem] font-medium text-canvas transition-colors duration-200 hover:bg-solid-hover sm:inline-flex"
+            size="sm"
+            className="hidden sm:inline-flex"
           >
             {dict.header.talk}
-            <ArrowUpRight
-              aria-hidden="true"
-              className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              strokeWidth={1.75}
-            />
-          </a>
+          </ButtonLink>
 
           <button
             type="button"
             onClick={() => setOpen(true)}
             aria-expanded={open}
             aria-controls="mobile-navigation"
-            className="grid h-11 w-11 place-items-center border border-fg/20 text-fg transition-colors hover:border-fg hover:bg-fg hover:text-canvas lg:hidden"
+            className="btn-icon lg:hidden"
           >
-            <Menu aria-hidden="true" className="h-5 w-5" strokeWidth={1.5} />
+            <Menu aria-hidden="true" className="h-5 w-5" strokeWidth={1.6} />
             <span className="sr-only">{dict.a11y.openMenu}</span>
           </button>
         </div>
@@ -115,43 +109,46 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
       <dialog
         ref={dialogRef}
         id="mobile-navigation"
-        aria-label={dict.a11y.siteNavigation}
+        aria-label={dict.a11y.mobileNav}
         onClose={() => setOpen(false)}
-        className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none border-0 bg-canvas p-0 text-fg backdrop:bg-ink/50 open:flex open:flex-col"
+        className="m-0 h-dvh max-h-none w-full max-w-none bg-canvas p-0 text-fg backdrop:bg-forest/40 lg:hidden"
       >
-        <div className="container-page flex h-[4.25rem] shrink-0 items-center justify-between border-b border-fg/15">
-          <Wordmark descriptor={dict.brand.descriptor} />
-          <button
-            type="button"
-            onClick={() => setOpen(false)}
-            className="grid h-11 w-11 place-items-center border border-fg/20 text-fg transition-colors hover:border-fg hover:bg-fg hover:text-canvas"
-          >
-            <X aria-hidden="true" className="h-5 w-5" strokeWidth={1.5} />
-            <span className="sr-only">{dict.a11y.closeMenu}</span>
-          </button>
-        </div>
+        <div className="flex h-full flex-col">
+          <div className="flex h-[4.75rem] shrink-0 items-center justify-between border-b border-line px-[var(--gutter)]">
+            <Wordmark descriptor="Studio" />
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="btn-icon"
+            >
+              <X aria-hidden="true" className="h-5 w-5" strokeWidth={1.6} />
+              <span className="sr-only">{dict.a11y.closeMenu}</span>
+            </button>
+          </div>
 
-        <div className="container-page flex flex-1 flex-col justify-between overflow-y-auto py-10">
-          <nav aria-label={dict.a11y.mobileNav}>
-            <ul className="border-t border-fg/15">
+          <nav
+            aria-label={dict.a11y.mobileNav}
+            className="flex-1 overflow-y-auto px-[var(--gutter)] py-6"
+          >
+            <ul className="flex flex-col">
               {dict.nav.map((item, index) => (
-                <li key={item.href} className="border-b border-fg/15">
+                <li key={item.href} className="border-b border-line">
                   <a
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="group flex items-baseline justify-between py-5"
+                    className="flex items-center justify-between gap-4 py-4"
                   >
-                    <span className="flex items-baseline gap-4">
-                      <span className="label text-fg/45">
-                        0{index + 1}
+                    <span className="flex items-baseline gap-3">
+                      <span className="label text-fg-subtle">
+                        {String(index + 1).padStart(2, "0")}
                       </span>
-                      <span className="font-display text-[2rem] leading-none tracking-[-0.03em]">
+                      <span className="font-display text-2xl font-semibold tracking-[-0.03em]">
                         {item.label}
                       </span>
                     </span>
                     <ArrowUpRight
                       aria-hidden="true"
-                      className="h-5 w-5 text-fg/40 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-fg"
+                      className="h-5 w-5 text-fg-muted"
                       strokeWidth={1.5}
                     />
                   </a>
@@ -159,8 +156,16 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
               ))}
             </ul>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              <ThemeSwitch labels={themeLabels} variant="expanded" />
+            <div className="mt-8 space-y-3">
+              <p className="label text-fg-subtle">{dict.a11y.theme}</p>
+              <ThemeSwitch
+                labels={{ ...dict.theme, label: dict.a11y.theme }}
+                variant="expanded"
+              />
+            </div>
+
+            <div className="mt-6 space-y-3">
+              <p className="label text-fg-subtle">{dict.a11y.language}</p>
               <LanguageSwitch
                 locale={locale}
                 label={dict.a11y.language}
@@ -169,15 +174,20 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
             </div>
           </nav>
 
-          <div className="mt-12 space-y-4">
-            <p className="label text-fg/45">{dict.header.startConversation}</p>
-            <a
-              href={`mailto:${site.email}`}
-              className="link-underline block text-lg text-fg"
+          <div className="shrink-0 border-t border-line px-[var(--gutter)] py-5">
+            <ButtonLink
+              href="#contact"
+              size="lg"
+              className="w-full"
             >
-              {site.email}
-            </a>
-            <p className="text-sm text-fg/60">{dict.brand.location}</p>
+              {dict.header.startConversation}
+            </ButtonLink>
+            <p className="mt-4 flex items-center justify-between gap-3 text-xs text-fg-muted">
+              <a href={`mailto:${site.email}`} className="link-underline">
+                {site.email}
+              </a>
+              <span className="label">{dict.brand.locationShort}</span>
+            </p>
           </div>
         </div>
       </dialog>

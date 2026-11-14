@@ -1,66 +1,74 @@
-import { Reveal } from "@/components/ui/reveal";
 import { SectionHeader } from "@/components/ui/section-header";
 import type { Dictionary } from "@/content/types";
 
 export function About({ dict }: { dict: Dictionary }) {
   return (
-    <section
-      id="about"
-      aria-labelledby="about-heading"
-      className="border-b border-fg/15 py-20 md:py-28 lg:py-32"
-    >
-      <div className="container-page">
-        <Reveal>
-          <SectionHeader
-            index="04"
-            label={dict.about.label}
-            title={<span id="about-heading">{dict.about.heading}</span>}
-          />
-        </Reveal>
+    <section id="about" aria-labelledby="about-heading" className="border-b border-line">
+      <div className="container-page section-y">
+        <SectionHeader
+          index="04"
+          label={dict.about.label}
+          title={<span id="about-heading">{dict.about.heading}</span>}
+        />
 
-        <div className="mt-12 grid gap-12 md:mt-16 lg:grid-cols-12 lg:gap-10">
-          <Reveal className="lg:col-span-7">
-            <p className="max-w-[24ch] font-display text-[clamp(1.5rem,2.7vw,2.35rem)] leading-[1.28] tracking-[-0.028em]">
+        <div className="mt-10 grid gap-10 md:mt-14 md:grid-cols-12 md:gap-8">
+          <div className="md:col-span-7">
+            <p className="max-w-[34ch] font-display text-[clamp(1.375rem,2.6vw,2rem)] font-semibold leading-[1.15] tracking-[-0.03em]">
               {dict.about.statement}
             </p>
 
-            <div className="mt-8 max-w-[58ch] space-y-5 text-[0.9375rem] leading-relaxed text-fg/65">
+            <div className="mt-6 space-y-4">
               {dict.about.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
+                <p
+                  key={paragraph.slice(0, 24)}
+                  className="max-w-[60ch] text-[0.9375rem] leading-relaxed text-fg-muted"
+                >
+                  {paragraph}
+                </p>
               ))}
             </div>
 
-            <div className="mt-10 max-w-[58ch] border-l-2 border-fg pl-5">
-              <p className="label text-fg/45">{dict.about.howWeWorkLabel}</p>
-              <p className="mt-2 text-sm leading-relaxed text-fg/75">
+            <div className="mt-8 max-w-[60ch] rounded-lg border border-line bg-surface p-5 sm:p-6">
+              <p className="eyebrow text-fg-subtle">
+                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-lime ring-1 ring-fg/20" />
+                {dict.about.howWeWorkLabel}
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-fg">
                 {dict.about.howWeWork}
               </p>
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal delay={120} className="lg:col-span-5 lg:pl-8">
-            <p className="label text-fg/45">{dict.about.principlesLabel}</p>
-            <ol className="mt-4 border-t border-fg/15">
+          <div className="md:col-span-5">
+            <p className="label border-b border-line pb-3 text-fg-subtle">
+              {dict.about.principlesLabel}
+            </p>
+            <ol>
               {dict.about.principles.map((principle) => (
                 <li
                   key={principle.index}
-                  className="grid grid-cols-[2rem_1fr] gap-3 border-b border-fg/15 py-4"
+                  className="grid grid-cols-[2rem_1fr] gap-3 border-b border-line py-4"
                 >
-                  <span className="label pt-1 text-fg/40">
+                  <span className="label pt-0.5 text-fg-subtle">
                     {principle.index}
                   </span>
                   <div>
-                    <h3 className="font-display text-base font-medium tracking-[-0.01em]">
+                    <h3 className="font-display text-base font-semibold leading-tight tracking-[-0.02em]">
                       {principle.title}
                     </h3>
-                    <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-fg/60">
+                    <p className="mt-1 text-sm leading-relaxed text-fg-muted">
                       {principle.description}
                     </p>
                   </div>
                 </li>
               ))}
             </ol>
-          </Reveal>
+
+            <p className="mt-6 flex items-center gap-2 text-xs text-fg-subtle">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-fg-subtle" />
+              {dict.brand.locationShort}
+            </p>
+          </div>
         </div>
       </div>
     </section>

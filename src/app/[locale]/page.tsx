@@ -7,6 +7,7 @@ import { Process } from "@/components/process";
 import { About } from "@/components/about";
 import { Contact } from "@/components/contact";
 import { SiteFooter } from "@/components/site-footer";
+import { BackToTop } from "@/components/ui/back-to-top";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { site } from "@/content/site";
@@ -62,6 +63,7 @@ export default async function Home({ params }: HomeProps) {
         <Contact locale={value} dict={dict} />
       </main>
       <SiteFooter dict={dict} />
+      <BackToTop label={dict.a11y.backToTop} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

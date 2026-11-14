@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/ui/reveal";
 import { SectionHeader } from "@/components/ui/section-header";
 import type { Dictionary } from "@/content/types";
 
@@ -7,61 +6,50 @@ export function Process({ dict }: { dict: Dictionary }) {
     <section
       id="process"
       aria-labelledby="process-heading"
-      className="bg-ink py-20 text-paper md:py-28 lg:py-32"
+      className="border-b border-line bg-surface"
     >
-      <div className="container-page">
-        <Reveal>
-          <SectionHeader
-            tone="dark"
-            index="03"
-            label={dict.process.label}
-            title={<span id="process-heading">{dict.process.heading}</span>}
-            intro={dict.process.intro}
+      <div className="container-page section-y">
+        <SectionHeader
+          index="03"
+          label={dict.process.label}
+          title={<span id="process-heading">{dict.process.heading}</span>}
+          intro={dict.process.intro}
+        />
+
+        <ol className="relative mt-12 grid gap-8 md:mt-16 md:grid-cols-5 md:gap-5">
+          <span
+            aria-hidden="true"
+            className="absolute left-0 right-0 top-[1.0625rem] hidden h-px bg-line-strong md:block"
           />
-        </Reveal>
 
-        <Reveal delay={100} className="mt-12 md:mt-16">
-          <ol className="grid border-t border-l border-paper/15 md:grid-cols-2 lg:grid-cols-5">
-            {dict.process.stages.map((stage) => (
-              <li
-                key={stage.index}
-                className="flex flex-col border-b border-r border-paper/15 p-6 transition-colors duration-300 hover:bg-paper/[0.035] lg:p-7"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-display text-2xl leading-none text-paper/30">
-                    {stage.index}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="h-1.5 w-1.5 bg-paper/25"
-                  />
-                </div>
+          {dict.process.stages.map((stage) => (
+            <li key={stage.index} className="relative flex gap-4 md:block">
+              <span className="relative z-10 grid h-[2.125rem] w-[2.125rem] shrink-0 place-items-center rounded-full border border-line-strong bg-surface font-mono text-[0.6875rem] font-medium tracking-[0.04em] md:bg-canvas">
+                {stage.index}
+              </span>
 
-                <h3 className="mt-10 font-display text-lg leading-tight tracking-[-0.02em] lg:mt-12">
+              <div className="min-w-0 pb-1 md:mt-6">
+                <h3 className="font-display text-lg font-semibold leading-tight tracking-[-0.025em]">
                   {stage.title}
                 </h3>
-                <p className="mt-3 text-[0.8125rem] leading-relaxed text-paper/60">
+                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
                   {stage.description}
                 </p>
 
-                <div className="mt-auto border-t border-paper/15 pt-4">
-                  <p className="text-[0.5625rem] font-medium uppercase tracking-[0.16em] text-paper/40">
-                    {dict.process.output}
-                  </p>
-                  <p className="mt-2 text-[0.75rem] leading-relaxed text-paper/65">
+                <div className="mt-4 border-t border-line pt-3">
+                  <p className="label text-fg-subtle">{dict.process.output}</p>
+                  <p className="mt-1.5 text-[0.6875rem] leading-relaxed text-fg-muted">
                     {stage.deliverables.join(" · ")}
                   </p>
                 </div>
-              </li>
-            ))}
-          </ol>
-        </Reveal>
+              </div>
+            </li>
+          ))}
+        </ol>
 
-        <Reveal delay={160}>
-          <p className="mt-8 max-w-[52ch] text-[0.8125rem] leading-relaxed text-paper/45">
-            {dict.process.closing}
-          </p>
-        </Reveal>
+        <p className="mt-12 max-w-[60ch] border-l-2 border-lime pl-4 text-sm leading-relaxed text-fg-muted md:mt-16">
+          {dict.process.closing}
+        </p>
       </div>
     </section>
   );

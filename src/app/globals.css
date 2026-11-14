@@ -1,37 +1,64 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   MAFYN — Forest & Butter design system
+   One type ratio, one radius family, one accent. No arbitrary values.
+   ------------------------------------------------------------------ */
+
 @theme {
-  /* Primary palette — the only four brand colours. */
-  --color-ink: #111318;
-  --color-paper: #f4f4f2;
-  --color-ash: #777c85;
-  --color-silver: #c8c9cc;
+  /* Core palette — the only five brand colours. */
+  --color-forest: #142d26;
+  --color-deep-green: #24483b;
+  --color-butter: #f5f1e5;
+  --color-lime: #d9e6a5;
+  --color-sand: #d6cbb8;
 
-  /* Derived monochrome tints, used for surfaces and depth only. */
-  --color-mist: #eaeae7;
-  --color-slate: #191c22;
+  /* Semantic tokens — LIGHT (default). Butter is the canvas. */
+  --color-canvas: #f5f1e5;
+  --color-fg: #142d26;
+  --color-fg-muted: #56675f;
+  --color-fg-subtle: #7d8b83;
+  --color-surface: #fbf8ef;
+  --color-surface-strong: #eee8d8;
+  --color-line: #ddd3c1;
+  --color-line-strong: #c3b7a2;
+  --color-accent: #d9e6a5;
+  --color-on-accent: #142d26;
+  --color-accent-hover: #cddd93;
+  --color-contrast: #142d26;
+  --color-on-contrast: #f5f1e5;
 
-  /* Semantic theme tokens. These switch with [data-theme]. */
-  --color-canvas: #f4f4f2;
-  --color-fg: #111318;
-  --color-panel: #eaeae7;
-  --color-solid: #111318;
-  --color-on-solid: #f4f4f2;
-  --color-solid-hover: #191c22;
+  /* Typography — three families, locked. */
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-bricolage), var(--font-instrument-sans),
+    ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", monospace;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", sans-serif;
-  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui,
-    sans-serif;
+  /* Radius — 2/3/4 px steps removed; radius expresses hierarchy only. */
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+
+  /* Rhythm */
+  --space-section: clamp(4.5rem, 8vw, 7.5rem);
+  --space-block: clamp(2rem, 3.5vw, 3rem);
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
 }
 
 html[data-theme="dark"] {
-  --color-canvas: #111318;
-  --color-fg: #f4f4f2;
-  --color-panel: #191c22;
-  --color-solid: #f4f4f2;
-  --color-on-solid: #111318;
-  --color-solid-hover: #c8c9cc;
+  --color-canvas: #142d26;
+  --color-fg: #f5f1e5;
+  --color-fg-muted: #b2c2b8;
+  --color-fg-subtle: #8b9e93;
+  --color-surface: #1c3a30;
+  --color-surface-strong: #24483b;
+  --color-line: #325146;
+  --color-line-strong: #47685a;
+  --color-contrast: #24483b;
+  --color-on-contrast: #f5f1e5;
 }
 
 @layer base {
@@ -46,8 +73,9 @@ html[data-theme="dark"] {
     background-color: var(--color-canvas);
     color: var(--color-fg);
     font-family: var(--font-sans);
-    font-synthesis-weight: none;
+    font-size: 1rem;
     line-height: 1.6;
+    font-synthesis-weight: none;
   }
 
   h1,
@@ -55,49 +83,358 @@ html[data-theme="dark"] {
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 500;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
     text-wrap: balance;
   }
 
+  p {
+    text-wrap: pretty;
+  }
+
   ::selection {
-    background-color: var(--color-fg);
-    color: var(--color-canvas);
+    background-color: var(--color-lime);
+    color: var(--color-forest);
   }
 
   :focus-visible {
-    outline: 2px solid currentColor;
+    outline: 2px solid var(--color-fg);
     outline-offset: 3px;
   }
 
   section[id] {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: 6rem;
   }
 }
 
 @layer components {
   .container-page {
     width: 100%;
-    max-width: 90rem;
+    max-width: 84rem;
     margin-inline: auto;
-    padding-inline: clamp(1.25rem, 4vw, 4.5rem);
+    padding-inline: var(--gutter);
   }
 
+  .section-y {
+    padding-block: var(--space-section);
+  }
+
+  /* Labels and metadata — mono, technical, quiet. */
   .label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-mono);
     font-size: 0.6875rem;
     font-weight: 500;
-    line-height: 1.4;
-    letter-spacing: 0.18em;
+    line-height: 1;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+  }
+
+  /* Display scale — one ratio-ish progression. */
+  .display-hero {
+    font-size: clamp(2.9rem, 6.6vw, 6rem);
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+  }
+
+  .display-section {
+    font-size: clamp(2.1rem, 4.4vw, 3.75rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .display-sub {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  /* ---------------- Buttons ----------------
+     Primary = pill, secondary = rounded rect, ghost = text, icon = circle.
+     Shape is the hierarchy signal; every variant shares 44/48px height. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 2.75rem;
+    padding-inline: 1.125rem;
+    border: 1px solid transparent;
+    border-radius: 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .btn-sm {
+    height: 2.25rem;
+    padding-inline: 0.875rem;
+    font-size: 0.8125rem;
+    border-radius: 0.625rem;
+  }
+
+  .btn-lg {
+    height: 3.25rem;
+    padding-inline: 1.5rem;
+    font-size: 0.9375rem;
+  }
+
+  .btn-primary {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    border-color: var(--color-accent);
+    border-radius: 999px;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-fg);
+    border-color: var(--color-line-strong);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-fg);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--color-fg);
+    border-color: transparent;
+    padding-inline: 0.375rem;
+    height: auto;
+  }
+
+  .btn-ghost:hover {
+    color: var(--color-fg-muted);
+  }
+
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 999px;
+    background-color: transparent;
+    color: var(--color-fg);
+    cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .btn-icon:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-fg);
+  }
+
+  .btn:focus-visible,
+  .btn-icon:focus-visible {
+    outline: 2px solid var(--color-fg);
+    outline-offset: 3px;
+  }
+
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* Active shape for switchers — filled pill, no layout shift. */
+  .switch-active {
+    background-color: var(--color-fg);
+    color: var(--color-canvas);
+    border-color: var(--color-fg);
+  }
+
+  /* ---------------- Cards ----------------
+     One border, one radius, one hover language. Variation comes from
+     composition (spans, media), never from mismatched styling. */
+  .card {
+    position: relative;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+  }
+
+  .card-interactive {
+    transition:
+      border-color 200ms ease,
+      background-color 200ms ease;
+  }
+
+  .card-interactive:hover {
+    border-color: var(--color-line-strong);
+    background-color: color-mix(in oklab, var(--color-surface) 82%, var(--color-butter));
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.3rem 0.625rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    color: var(--color-fg-muted);
+    white-space: nowrap;
+  }
+
+  /* A dark band inside the page. Remaps semantic tokens so nested
+     components (buttons, fields, cards) adapt without extra variants. */
+  .section-dark {
+    --color-canvas: var(--color-contrast);
+    --color-fg: var(--color-on-contrast);
+    --color-fg-muted: color-mix(
+      in oklab,
+      var(--color-on-contrast) 70%,
+      var(--color-forest)
+    );
+    --color-fg-subtle: color-mix(
+      in oklab,
+      var(--color-on-contrast) 50%,
+      var(--color-forest)
+    );
+    --color-surface: color-mix(
+      in oklab,
+      var(--color-deep-green) 78%,
+      var(--color-forest)
+    );
+    --color-surface-strong: var(--color-deep-green);
+    --color-line: color-mix(
+      in oklab,
+      var(--color-on-contrast) 18%,
+      var(--color-forest)
+    );
+    --color-line-strong: color-mix(
+      in oklab,
+      var(--color-on-contrast) 34%,
+      var(--color-forest)
+    );
+    background-color: var(--color-contrast);
+    color: var(--color-on-contrast);
+  }
+
+  /* Form fields inherit whatever surface they sit on. */
+  .field {
+    width: 100%;
+    appearance: none;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-sm);
+    background-color: color-mix(in oklab, var(--color-canvas) 55%, transparent);
+    padding: 0.75rem 0.9375rem;
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease;
+  }
+
+  .field::placeholder {
+    color: var(--color-fg-subtle);
+  }
+
+  .field:hover {
+    border-color: var(--color-fg-muted);
+  }
+
+  .field:focus {
+    outline: none;
+    border-color: var(--color-fg);
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--color-fg) 14%, transparent);
+  }
+
+  .field[aria-invalid="true"] {
+    border-color: #e2a18f;
+    box-shadow: inset 3px 0 0 #e2a18f;
+  }
+
+  .field option {
+    background-color: var(--color-canvas);
+    color: var(--color-fg);
+  }
+
+  .field:-webkit-autofill,
+  .field:-webkit-autofill:hover,
+  .field:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-fg);
+    -webkit-box-shadow: 0 0 0 1000px var(--color-surface) inset;
+    transition: background-color 9999s ease-in-out 0s;
+  }
+
+  /* Fine grid, used once as a technical texture. */
+  .grid-texture {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in oklab, var(--color-fg) 7%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--color-fg) 7%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 40px 40px;
+  }
+
+  /* Same fine grid, inverted for use on forest/contrast panels. */
+  .grid-texture-inverse {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in oklab, var(--color-butter) 14%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--color-butter) 14%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 40px 40px;
   }
 
   .link-underline {
     text-decoration-line: underline;
     text-underline-offset: 0.3em;
     text-decoration-thickness: 1px;
-    text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
-    transition: text-decoration-color 180ms ease;
+    text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
+    transition: text-decoration-color 160ms ease;
   }
 
   .link-underline:hover {
@@ -110,6 +447,7 @@ html[data-theme="dark"] {
     left: 0.75rem;
     z-index: 100;
     transform: translateY(-150%);
+    border-radius: 999px;
     background-color: var(--color-fg);
     color: var(--color-canvas);
     padding: 0.75rem 1.1rem;
@@ -121,82 +459,22 @@ html[data-theme="dark"] {
     transform: translateY(0);
   }
 
-  /* Contact form fields — intentionally square and outline-led. */
-  .field {
-    width: 100%;
-    appearance: none;
-    border: 1px solid color-mix(in srgb, var(--color-paper) 22%, transparent);
-    border-radius: 0;
-    background-color: transparent;
-    padding: 0.8125rem 1rem;
-    color: var(--color-paper);
-    font-family: var(--font-sans);
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    transition:
-      border-color 180ms ease,
-      background-color 180ms ease;
-  }
-
-  .field::placeholder {
-    color: color-mix(in srgb, var(--color-paper) 42%, transparent);
-  }
-
-  .field:hover {
-    border-color: color-mix(in srgb, var(--color-paper) 38%, transparent);
-  }
-
-  .field:focus {
-    outline: none;
-    border-color: var(--color-paper);
-    box-shadow: 0 0 0 1px var(--color-paper);
-  }
-
-  .field[aria-invalid="true"] {
-    border-color: var(--color-paper);
-    box-shadow: inset 3px 0 0 var(--color-paper);
-  }
-
-  .field option {
-    background-color: var(--color-slate);
-    color: var(--color-paper);
-  }
-
-  .field:-webkit-autofill,
-  .field:-webkit-autofill:hover,
-  .field:-webkit-autofill:focus {
-    -webkit-text-fill-color: var(--color-paper);
-    -webkit-box-shadow: 0 0 0 1000px var(--color-ink) inset;
-    transition: background-color 9999s ease-in-out 0s;
-  }
-
-  .placeholder-grid {
-    background-image:
-      linear-gradient(
-        to right,
-        color-mix(in srgb, var(--color-fg) 8%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        color-mix(in srgb, var(--color-fg) 8%, transparent) 1px,
-        transparent 1px
-      );
-    background-size: 36px 36px;
+  .marquee-track {
+    animation: marquee 32s linear infinite;
   }
 }
 
 /* Scroll reveals are opt-in: content is visible if JS never runs. */
 [data-reveal="hidden"] {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(16px);
 }
 
 [data-reveal="hidden"],
 [data-reveal="visible"] {
   transition:
-    opacity 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    opacity 650ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 650ms cubic-bezier(0.22, 0.61, 0.36, 1);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
@@ -206,18 +484,27 @@ html[data-theme="dark"] {
 }
 
 .enter {
-  animation: enter 800ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: enter 700ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
   animation-delay: var(--enter-delay, 0ms);
 }
 
 @keyframes enter {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
@@ -237,10 +524,13 @@ html[data-theme="dark"] {
     animation: none;
   }
 
+  .marquee-track {
+    animation: none;
+  }
+
   *,
   *::before,
   *::after {
-    scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

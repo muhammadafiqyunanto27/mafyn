@@ -17,16 +17,20 @@ export function LanguageSwitch({
     <div
       role="group"
       aria-label={label}
-      className={`flex border border-fg/20 ${expanded ? "w-full" : ""}`}
+      className={`inline-flex border border-line-strong rounded-full p-0.5 ${
+        expanded ? "w-full" : ""
+      }`}
     >
       {locales.map((item) => {
         const active = item === locale;
-        const className = `flex items-center justify-center font-medium transition-colors duration-150 ${
-          expanded ? "h-11 px-4 text-[0.6875rem] tracking-[0.08em]" : "h-9 px-3 text-[0.625rem] tracking-[0.1em]"
+        const className = `flex items-center justify-center rounded-full font-mono font-medium transition-colors duration-150 ${
+          expanded
+            ? "h-10 flex-1 px-4 text-[0.6875rem] tracking-[0.08em]"
+            : "h-8 px-2.5 text-[0.625rem] tracking-[0.1em]"
         } ${
           active
             ? "bg-fg text-canvas"
-            : "text-fg/55 hover:bg-fg/10 hover:text-fg"
+            : "text-fg-muted hover:bg-surface hover:text-fg"
         }`;
 
         return active ? (

@@ -1,39 +1,43 @@
-import { site } from "@/content/site";
+import { Mail, MapPin, MessageSquare } from "lucide-react";
+import { ButtonLink } from "@/components/ui/button-link";
 import { Wordmark } from "@/components/ui/wordmark";
+import { site } from "@/content/site";
 import type { Dictionary } from "@/content/types";
 
 export function SiteFooter({ dict }: { dict: Dictionary }) {
-  const year = 2026;
-  const copy = dict.footer;
-
   return (
-    <footer className="border-t border-paper/15 bg-ink text-paper">
-      <div className="container-page pt-16 md:pt-20">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
-          <div className="lg:col-span-5">
-            <a href="#top" aria-label={dict.a11y.backToTop} className="inline-block">
-              <Wordmark
-                tone="inverse"
-                descriptor={dict.brand.descriptor}
-              />
-            </a>
-            <p className="mt-6 max-w-[38ch] text-sm leading-relaxed text-paper/60">
-              {dict.brand.description}
+    <footer className="section-dark" aria-labelledby="footer-heading">
+      <div className="container-page pt-14 pb-8 md:pt-20">
+        <div className="grid gap-10 md:grid-cols-12 md:gap-8">
+          <div className="md:col-span-5">
+            <div id="footer-heading">
+              <Wordmark descriptor="Studio" />
+            </div>
+
+            <p className="mt-5 max-w-[42ch] text-[0.9375rem] leading-relaxed text-fg-muted">
+              {dict.footer.descriptor}
             </p>
-            <p className="label mt-8 text-paper/35">{dict.brand.tagline}</p>
+
+            <div className="mt-6">
+              <ButtonLink href="#contact" size="sm">
+                {dict.header.startConversation}
+              </ButtonLink>
+            </div>
+
+            <p className="mt-6 flex items-center gap-2 text-xs text-fg-subtle">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-lime" />
+              {dict.brand.tagline}
+            </p>
           </div>
 
-          <nav
-            aria-label={dict.a11y.footerNav}
-            className="lg:col-span-2 lg:col-start-7"
-          >
-            <h2 className="label text-paper/40">{copy.navigate}</h2>
+          <nav aria-label={dict.a11y.footerNav} className="md:col-span-3">
+            <p className="label text-fg-subtle">{dict.footer.navigate}</p>
             <ul className="mt-4 space-y-2.5">
               {dict.nav.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="text-[0.8125rem] text-paper/60 transition-colors hover:text-paper"
+                    className="text-sm text-fg-muted transition-colors hover:text-fg"
                   >
                     {item.label}
                   </a>
@@ -42,59 +46,70 @@ export function SiteFooter({ dict }: { dict: Dictionary }) {
             </ul>
           </nav>
 
-          <div className="lg:col-span-2">
-            <h2 className="label text-paper/40">{copy.services}</h2>
+          <div className="md:col-span-2">
+            <p className="label text-fg-subtle">{dict.footer.services}</p>
             <ul className="mt-4 space-y-2.5">
               {dict.services.items.map((service) => (
-                <li
-                  key={service.title}
-                  className="text-[0.8125rem] text-paper/60"
-                >
-                  {service.title}
+                <li key={service.index}>
+                  <a
+                    href="#services"
+                    className="text-sm text-fg-muted transition-colors hover:text-fg"
+                  >
+                    {service.title}
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="lg:col-span-2">
-            <h2 className="label text-paper/40">{copy.contact}</h2>
-            <ul className="mt-4 space-y-2.5">
+          <div className="md:col-span-2">
+            <p className="label text-fg-subtle">{dict.footer.contact}</p>
+            <ul className="mt-4 space-y-2.5 text-sm text-fg-muted">
               <li>
                 <a
                   href={`mailto:${site.email}`}
-                  className="link-underline break-all text-[0.8125rem] text-paper/60 hover:text-paper"
+                  className="inline-flex items-center gap-2 transition-colors hover:text-fg"
                 >
+                  <Mail aria-hidden="true" className="h-3.5 w-3.5" strokeWidth={1.6} />
                   {site.email}
                 </a>
               </li>
-              <li className="text-[0.8125rem] text-paper/60">
-                {copy.whatsapp}
-                <span className="mt-0.5 block text-[0.75rem] text-paper/40">
-                  {site.whatsapp} {copy.placeholder}
+              <li className="flex items-start gap-2">
+                <MessageSquare
+                  aria-hidden="true"
+                  className="mt-0.5 h-3.5 w-3.5 shrink-0"
+                  strokeWidth={1.6}
+                />
+                <span>
+                  {site.whatsapp}
+                  <span className="mt-1 block text-[0.6875rem] text-fg-subtle">
+                    {dict.footer.placeholder}
+                  </span>
                 </span>
               </li>
-              <li className="text-[0.8125rem] text-paper/60">
-                {copy.indonesia}
-                <span className="mt-0.5 block text-[0.75rem] text-paper/40">
-                  {copy.workingWorldwide}
+              <li className="flex items-start gap-2">
+                <MapPin
+                  aria-hidden="true"
+                  className="mt-0.5 h-3.5 w-3.5 shrink-0"
+                  strokeWidth={1.6}
+                />
+                <span>
+                  {dict.footer.indonesia}
+                  <span className="mt-1 block text-[0.6875rem] text-fg-subtle">
+                    {dict.footer.workingWorldwide}
+                  </span>
                 </span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-2 border-t border-paper/15 py-6 text-[0.75rem] text-paper/40 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {year} MAFYN. {copy.rights}
+        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-fg-subtle">
+            © 2026 MAFYN. {dict.footer.rights}
           </p>
-          <p>{copy.descriptor}</p>
+          <p className="text-xs text-fg-subtle">{dict.brand.location}</p>
         </div>
-      </div>
-
-      <div className="container-page overflow-hidden" aria-hidden="true">
-        <p className="-mb-[0.2em] select-none font-display text-[clamp(5rem,18.5vw,17rem)] font-semibold leading-[0.7] tracking-[-0.055em] text-paper/[0.07]">
-          MAFYN
-        </p>
       </div>
     </footer>
   );

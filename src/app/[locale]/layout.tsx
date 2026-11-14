@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Inter, Space_Grotesk } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  IBM_Plex_Mono,
+  Instrument_Sans,
+} from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -11,15 +15,22 @@ import {
 import { site } from "@/content/site";
 import { themeScript } from "@/lib/theme";
 
-const inter = Inter({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-bricolage",
   display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
+const instrument = Instrument_Sans({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-instrument-sans",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
@@ -101,8 +112,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F4F4F2" },
-    { media: "(prefers-color-scheme: dark)", color: "#111318" },
+    { media: "(prefers-color-scheme: light)", color: "#F5F1E5" },
+    { media: "(prefers-color-scheme: dark)", color: "#142D26" },
   ],
   colorScheme: "light dark",
 };
@@ -121,7 +132,7 @@ export default async function LocaleLayout({
     <html
       lang={value}
       suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable}`}
+      className={`${bricolage.variable} ${instrument.variable} ${plexMono.variable}`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

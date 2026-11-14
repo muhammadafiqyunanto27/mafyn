@@ -5,6 +5,7 @@ import {
   AlertCircle,
   ArrowUpRight,
   Check,
+  ChevronDown,
   Loader2,
   RotateCcw,
 } from "lucide-react";
@@ -15,25 +16,31 @@ import type { Locale } from "@/i18n/config";
 
 type FormCopy = Dictionary["contact"]["form"];
 
+type ContactFormProps = {
+  locale: Locale;
+  copy: FormCopy;
+  email: string;
+};
+
 function FieldError({ id, children }: { id: string; children: ReactNode }) {
   return (
     <p
       id={id}
-      className="mt-2 flex items-start gap-1.5 text-[0.75rem] leading-snug text-paper/85"
+      className="mt-1.5 flex items-start gap-1.5 text-[0.75rem] leading-snug text-fg"
     >
       <AlertCircle
         aria-hidden="true"
         className="mt-px h-3.5 w-3.5 shrink-0"
-        strokeWidth={1.5}
+        strokeWidth={1.75}
       />
-      <span>{children}</span>
+      {children}
     </p>
   );
 }
 
 function RequiredMark() {
   return (
-    <span aria-hidden="true" className="text-paper/40">
+    <span aria-hidden="true" className="text-fg-subtle">
       {" "}
       *
     </span>
@@ -55,93 +62,77 @@ function ContactFormFields({
     sendInquiry,
     initialContactState,
   );
+  const errors = state.errors ?? {};
 
   if (state.status === "success") {
     return (
       <div
         role="status"
-        className="flex min-h-[30rem] flex-col border border-paper/20 bg-paper/[0.025] p-5 sm:p-8"
+        className="card flex min-h-[32rem] flex-col p-6 sm:p-8"
       >
-        <div className="flex items-baseline justify-between gap-4 border-b border-paper/15 pb-5">
-          <h3 className="font-display text-lg tracking-[-0.01em]">
-            {copy.title}
-          </h3>
-          <span className="label text-paper/40">{copy.received}</span>
+        <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
+          <p className="label text-fg">{copy.title}</p>
+          <p className="label text-fg-subtle">{copy.received}</p>
         </div>
 
-        <div className="my-auto py-12">
-          <span className="grid h-11 w-11 place-items-center border border-paper/30 text-paper">
-            <Check aria-hidden="true" className="h-5 w-5" strokeWidth={1.75} />
+        <div className="flex flex-1 flex-col items-center justify-center py-10 text-center">
+          <span className="grid h-14 w-14 place-items-center rounded-full bg-lime text-forest">
+            <Check aria-hidden="true" className="h-6 w-6" strokeWidth={2} />
           </span>
-          <h4 className="mt-6 font-display text-2xl tracking-[-0.02em]">
+          <h3 className="mt-5 font-display text-2xl font-semibold tracking-[-0.03em]">
             {copy.successTitle}
-          </h4>
-          <p className="mt-3 max-w-[40ch] text-sm leading-relaxed text-paper/65">
+          </h3>
+          <p className="mt-2 max-w-[38ch] text-sm leading-relaxed text-fg-muted">
             {copy.successBody}
           </p>
+          <button
+            type="button"
+            onClick={onReset}
+            className="btn btn-secondary mt-6"
+          >
+            <RotateCcw aria-hidden="true" className="h-4 w-4" strokeWidth={1.75} />
+            {copy.sendAnother}
+          </button>
         </div>
-
-        <button
-          type="button"
-          onClick={onReset}
-          className="group inline-flex items-center justify-center gap-2.5 border border-paper/30 px-5 py-3.5 text-sm font-medium text-paper transition-colors hover:border-paper hover:bg-paper/10"
-        >
-          {copy.sendAnother}
-          <RotateCcw
-            aria-hidden="true"
-            className="h-4 w-4 transition-transform duration-200 group-hover:-rotate-45"
-            strokeWidth={1.5}
-          />
-        </button>
       </div>
     );
   }
 
-  const errors = state.errors;
-
   return (
-    <div className="relative border border-paper/20 bg-paper/[0.025] p-5 sm:p-8">
-      <div className="flex items-baseline justify-between gap-4 border-b border-paper/15 pb-5">
-        <h3 className="font-display text-lg tracking-[-0.01em]">
-          {copy.title}
-        </h3>
-        <span className="label text-paper/40">{copy.replyByEmail}</span>
+    <div className="card p-6 sm:p-8">
+      <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
+        <p className="label text-fg">{copy.title}</p>
+        <p className="max-w-[22ch] text-right text-xs leading-snug text-fg-subtle">
+          {copy.replyByEmail}
+        </p>
       </div>
 
-      <p className="mt-5 text-[0.75rem] text-paper/45">{copy.requiredNote}</p>
+      <p className="mt-4 text-xs text-fg-muted">{copy.requiredNote}</p>
 
       {state.status === "error" && (
         <div
           role="alert"
-          className="mt-5 flex items-start gap-3 border border-paper/30 bg-paper/[0.04] px-4 py-3.5"
+          className="mt-4 flex items-start gap-2.5 rounded-md border border-fg/25 bg-surface-strong px-4 py-3"
         >
           <AlertCircle
             aria-hidden="true"
-            className="mt-0.5 h-4 w-4 shrink-0 text-paper"
-            strokeWidth={1.5}
+            className="mt-0.5 h-4 w-4 shrink-0 text-fg"
+            strokeWidth={1.75}
           />
-          <div>
-            <p className="text-sm font-medium text-paper">{copy.errorTitle}</p>
-            <p className="mt-1 text-[0.8125rem] leading-relaxed text-paper/70">
-              {state.message}
-            </p>
-            <a
-              href={`mailto:${email}`}
-              className="link-underline mt-2 inline-block text-[0.8125rem] text-paper/85"
-            >
+          <div className="text-sm leading-relaxed">
+            <p className="font-medium">{copy.errorTitle}</p>
+            <p className="text-fg-muted">{state.message}</p>
+            <a href={`mailto:${email}`} className="mt-1 inline-block link-underline">
               {email}
             </a>
           </div>
         </div>
       )}
 
-      <form
-        action={formAction}
-        aria-busy={pending}
-        className="mt-6 grid gap-5 sm:grid-cols-2"
-      >
+      <form action={formAction} aria-busy={pending} className="mt-5">
         <input type="hidden" name="locale" value={locale} />
 
+        {/* Honeypot — hidden from people, visible to bots only. */}
         <div aria-hidden="true" className="absolute -left-[9999px]">
           <label htmlFor="website_url">{copy.honeypot}</label>
           <input
@@ -153,213 +144,200 @@ function ContactFormFields({
           />
         </div>
 
-        <div>
-          <label
-            htmlFor="name"
-            className="mb-2 block text-[0.75rem] font-medium text-paper/80"
-          >
-            {copy.name}
-            <RequiredMark />
-          </label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            required
-            minLength={2}
-            maxLength={80}
-            autoComplete="name"
-            placeholder={copy.namePlaceholder}
-            className="field"
-            aria-invalid={errors.name ? true : undefined}
-            aria-describedby={errors.name ? "name-error" : undefined}
-          />
-          {errors.name && <FieldError id="name-error">{errors.name}</FieldError>}
-        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="name" className="label text-fg-muted">
+              {copy.name}
+              <RequiredMark />
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              minLength={2}
+              maxLength={80}
+              autoComplete="name"
+              placeholder={copy.namePlaceholder}
+              className="field mt-2"
+              aria-invalid={errors.name ? true : undefined}
+              aria-describedby={errors.name ? "name-error" : undefined}
+            />
+            {errors.name && <FieldError id="name-error">{errors.name}</FieldError>}
+          </div>
 
-        <div>
-          <label
-            htmlFor="email"
-            className="mb-2 block text-[0.75rem] font-medium text-paper/80"
-          >
-            {copy.email}
-            <RequiredMark />
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            maxLength={200}
-            autoComplete="email"
-            placeholder={copy.emailPlaceholder}
-            className="field"
-            aria-invalid={errors.email ? true : undefined}
-            aria-describedby={errors.email ? "email-error" : undefined}
-          />
-          {errors.email && (
-            <FieldError id="email-error">{errors.email}</FieldError>
-          )}
-        </div>
-
-        <div className="sm:col-span-2">
-          <label
-            htmlFor="company"
-            className="mb-2 block text-[0.75rem] font-medium text-paper/80"
-          >
-            {copy.company}
-            <span className="font-normal text-paper/40">
-              {" "}
-              {copy.optional}
-            </span>
-          </label>
-          <input
-            id="company"
-            name="company"
-            type="text"
-            maxLength={120}
-            autoComplete="organization"
-            placeholder={copy.companyPlaceholder}
-            className="field"
-            aria-invalid={errors.company ? true : undefined}
-            aria-describedby={errors.company ? "company-error" : undefined}
-          />
-          {errors.company && (
-            <FieldError id="company-error">{errors.company}</FieldError>
-          )}
-        </div>
-
-        <div>
-          <label
-            htmlFor="projectType"
-            className="mb-2 block text-[0.75rem] font-medium text-paper/80"
-          >
-            {copy.projectType}
-            <RequiredMark />
-          </label>
-          <select
-            id="projectType"
-            name="projectType"
-            required
-            defaultValue="Not sure"
-            className="field"
-            aria-invalid={errors.projectType ? true : undefined}
-            aria-describedby={
-              errors.projectType ? "projectType-error" : undefined
-            }
-          >
-            {copy.projectTypes.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          {errors.projectType && (
-            <FieldError id="projectType-error">
-              {errors.projectType}
-            </FieldError>
-          )}
-        </div>
-
-        <div>
-          <label
-            htmlFor="budget"
-            className="mb-2 block text-[0.75rem] font-medium text-paper/80"
-          >
-            {copy.budget}
-            <span className="font-normal text-paper/40">
-              {" "}
-              {copy.optional}
-            </span>
-          </label>
-          <select
-            id="budget"
-            name="budget"
-            defaultValue="Not sure yet"
-            className="field"
-            aria-invalid={errors.budget ? true : undefined}
-            aria-describedby={errors.budget ? "budget-error" : undefined}
-          >
-            {copy.budgets.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          {errors.budget && (
-            <FieldError id="budget-error">{errors.budget}</FieldError>
-          )}
-        </div>
-
-        <div className="sm:col-span-2">
-          <label
-            htmlFor="message"
-            className="mb-2 block text-[0.75rem] font-medium text-paper/80"
-          >
-            {copy.details}
-            <RequiredMark />
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            required
-            minLength={20}
-            maxLength={3000}
-            rows={5}
-            placeholder={copy.detailsPlaceholder}
-            className="field min-h-32 resize-y"
-            aria-invalid={errors.message ? true : undefined}
-            aria-describedby={errors.message ? "message-error" : undefined}
-          />
-          {errors.message && (
-            <FieldError id="message-error">{errors.message}</FieldError>
-          )}
-        </div>
-
-        <div className="sm:col-span-2">
-          <button
-            type="submit"
-            disabled={pending}
-            className="group flex w-full items-center justify-center gap-2.5 border border-paper bg-paper px-5 py-3.5 text-sm font-medium text-ink transition-colors duration-200 hover:border-silver hover:bg-silver disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {pending ? (
-              <>
-                <Loader2
-                  aria-hidden="true"
-                  className="h-4 w-4 animate-spin motion-reduce:animate-none"
-                  strokeWidth={1.75}
-                />
-                {copy.sending}
-              </>
-            ) : (
-              <>
-                {copy.send}
-                <ArrowUpRight
-                  aria-hidden="true"
-                  className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  strokeWidth={1.75}
-                />
-              </>
+          <div>
+            <label htmlFor="email" className="label text-fg-muted">
+              {copy.email}
+              <RequiredMark />
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              maxLength={200}
+              autoComplete="email"
+              placeholder={copy.emailPlaceholder}
+              className="field mt-2"
+              aria-invalid={errors.email ? true : undefined}
+              aria-describedby={errors.email ? "email-error" : undefined}
+            />
+            {errors.email && (
+              <FieldError id="email-error">{errors.email}</FieldError>
             )}
-          </button>
-          <p className="mt-3 text-[0.6875rem] leading-relaxed text-paper/40">
-            {copy.privacy}
-          </p>
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="company" className="label text-fg-muted">
+              {copy.company}
+              <span className="normal-case tracking-normal text-fg-subtle">
+                {" "}
+                {copy.optional}
+              </span>
+            </label>
+            <input
+              id="company"
+              name="company"
+              type="text"
+              maxLength={120}
+              autoComplete="organization"
+              placeholder={copy.companyPlaceholder}
+              className="field mt-2"
+              aria-invalid={errors.company ? true : undefined}
+              aria-describedby={errors.company ? "company-error" : undefined}
+            />
+            {errors.company && (
+              <FieldError id="company-error">{errors.company}</FieldError>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="projectType" className="label text-fg-muted">
+              {copy.projectType}
+              <RequiredMark />
+            </label>
+            <div className="relative">
+              <select
+                id="projectType"
+                name="projectType"
+                required
+                defaultValue="Not sure"
+                className="field mt-2 pr-10"
+                aria-invalid={errors.projectType ? true : undefined}
+                aria-describedby={
+                  errors.projectType ? "projectType-error" : undefined
+                }
+              >
+                {copy.projectTypes.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                aria-hidden="true"
+                className="pointer-events-none absolute right-3 top-[2.05rem] h-4 w-4 text-fg-subtle"
+                strokeWidth={1.6}
+              />
+            </div>
+            {errors.projectType && (
+              <FieldError id="projectType-error">{errors.projectType}</FieldError>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="budget" className="label text-fg-muted">
+              {copy.budget}
+              <span className="normal-case tracking-normal text-fg-subtle">
+                {" "}
+                {copy.optional}
+              </span>
+            </label>
+            <div className="relative">
+              <select
+                id="budget"
+                name="budget"
+                defaultValue="Not sure yet"
+                className="field mt-2 pr-10"
+                aria-invalid={errors.budget ? true : undefined}
+                aria-describedby={errors.budget ? "budget-error" : undefined}
+              >
+                {copy.budgets.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown
+                aria-hidden="true"
+                className="pointer-events-none absolute right-3 top-[2.05rem] h-4 w-4 text-fg-subtle"
+                strokeWidth={1.6}
+              />
+            </div>
+            {errors.budget && (
+              <FieldError id="budget-error">{errors.budget}</FieldError>
+            )}
+          </div>
+
+          <div className="sm:col-span-2">
+            <label htmlFor="message" className="label text-fg-muted">
+              {copy.details}
+              <RequiredMark />
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows={5}
+              required
+              minLength={20}
+              maxLength={3000}
+              placeholder={copy.detailsPlaceholder}
+              className="field mt-2 min-h-32 resize-y"
+              aria-invalid={errors.message ? true : undefined}
+              aria-describedby={errors.message ? "message-error" : undefined}
+            />
+            {errors.message && (
+              <FieldError id="message-error">{errors.message}</FieldError>
+            )}
+          </div>
         </div>
+
+        <button
+          type="submit"
+          disabled={pending}
+          className="btn btn-primary mt-6 w-full"
+        >
+          {pending ? (
+            <>
+              <Loader2
+                aria-hidden="true"
+                className="h-4 w-4 animate-spin motion-reduce:animate-none"
+                strokeWidth={1.75}
+              />
+              {copy.sending}
+            </>
+          ) : (
+            <>
+              {copy.send}
+              <ArrowUpRight
+                aria-hidden="true"
+                className="h-4 w-4"
+                strokeWidth={1.75}
+              />
+            </>
+          )}
+        </button>
+
+        <p className="mt-3 text-xs leading-relaxed text-fg-subtle">
+          {copy.privacy}
+        </p>
       </form>
     </div>
   );
 }
 
-export function ContactForm({
-  locale,
-  copy,
-  email,
-}: {
-  locale: Locale;
-  copy: FormCopy;
-  email: string;
-}) {
+export function ContactForm({ locale, copy, email }: ContactFormProps) {
   const [instance, setInstance] = useState(0);
 
   return (

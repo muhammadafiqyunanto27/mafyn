@@ -1,8 +1,9 @@
-import type { CSSProperties } from "react";
+﻿import type { CSSProperties } from "react";
 import { ButtonLink } from "@/components/ui/button-link";
+import { site } from "@/content/site";
 import type { Dictionary } from "@/content/types";
 
-const workingStack = [
+const stack = [
   "Next.js",
   "React",
   "TypeScript",
@@ -11,146 +12,191 @@ const workingStack = [
   "Tailwind CSS",
 ];
 
-function Layer({
-  index,
-  title,
-  items,
-}: {
-  index: string;
-  title: string;
-  items: string;
-}) {
-  return (
-    <div className="border border-fg/15 bg-canvas px-3.5 py-3">
-      <div className="flex items-center justify-between">
-        <span className="label text-fg/45">{index}</span>
-        <span aria-hidden="true" className="h-1.5 w-1.5 bg-fg/25" />
-      </div>
-      <p className="mt-2 font-display text-sm font-medium tracking-[-0.01em]">
-        {title}
-      </p>
-      <p className="mt-0.5 text-xs leading-snug text-fg/60">{items}</p>
-    </div>
-  );
-}
-
-function Connector({ label }: { label: string }) {
-  return (
-    <div className="flex h-9 items-center gap-3 pl-6">
-      <span aria-hidden="true" className="h-full w-px bg-fg/20" />
-      <span className="text-[0.5625rem] font-medium uppercase tracking-[0.16em] text-fg/45">
-        {label}
-      </span>
-    </div>
-  );
-}
-
-function SystemModel({ dict }: { dict: Dictionary }) {
+function SystemPreview({ dict }: { dict: Dictionary }) {
   const model = dict.hero.systemModel;
+  const navItems = dict.nav.slice(0, 3);
 
   return (
-    <aside
-      aria-label={dict.a11y.architecture}
-      className="border border-fg/15 bg-panel"
-    >
-      <div className="flex items-center justify-between border-b border-fg/15 px-4 py-3">
-        <span className="label text-fg/60">{model.title}</span>
-        <span className="label text-fg/40">{model.reference}</span>
+    <div aria-hidden="true" className="relative lg:h-full">
+      <div className="relative h-full overflow-hidden rounded-xl border border-line bg-deep-green p-2.5 sm:p-3">
+        <div className="relative flex min-h-[20rem] h-full flex-col overflow-hidden rounded-lg bg-canvas text-fg lg:min-h-0">
+          <div className="flex items-center gap-1.5 border-b border-line px-3 py-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-fg/20" />
+            <span className="h-1.5 w-1.5 rounded-full bg-fg/20" />
+            <span className="h-1.5 w-1.5 rounded-full bg-fg/20" />
+            <span className="ml-2 truncate rounded-full bg-surface px-2.5 py-0.5 font-mono text-[0.625rem] tracking-[0.02em] text-fg-muted">
+              {site.domain}
+            </span>
+            <span className="label ml-auto hidden text-fg-subtle sm:block">
+              {model.reference}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between gap-3 px-4 pt-3">
+            <span className="flex items-center gap-1.5">
+              <span className="grid h-5 w-5 place-items-center rounded-[0.3rem] bg-lime font-display text-[0.625rem] font-bold text-forest">
+                M
+              </span>
+              <span className="font-display text-[0.75rem] font-semibold tracking-[0.14em]">
+                MAFYN
+              </span>
+            </span>
+
+            <span className="hidden items-center gap-3 font-mono text-[0.625rem] uppercase tracking-[0.08em] text-fg-muted sm:flex">
+              {navItems.map((item) => (
+                <span key={item.href}>{item.label}</span>
+              ))}
+            </span>
+
+            <span className="rounded-full bg-fg px-2.5 py-1 font-mono text-[0.5625rem] font-medium uppercase tracking-[0.06em] text-canvas">
+              {dict.header.talk}
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-2 px-4 pt-5">
+            <span className="eyebrow text-fg-muted">{dict.hero.eyebrow}</span>
+            <p className="display-sub max-w-[18ch] text-[1.15rem] leading-[1.05]">
+              {dict.brand.tagline}
+            </p>
+            <p className="max-w-[34ch] text-[0.6875rem] leading-relaxed text-fg-muted">
+              {dict.hero.description}
+            </p>
+            <span className="mt-1 flex flex-wrap items-center gap-1.5">
+              <span className="rounded-full bg-lime px-2.5 py-1 text-[0.625rem] font-semibold text-forest">
+                {dict.hero.primaryCta}
+              </span>
+              <span className="rounded-full border border-line-strong px-2.5 py-1 text-[0.625rem] font-semibold text-fg">
+                {dict.hero.secondaryCta}
+              </span>
+            </span>
+          </div>
+
+          <div className="relative m-4 flex-1 overflow-hidden rounded-md border border-line bg-deep-green">
+            <div className="grid-texture-inverse absolute inset-0 opacity-30" />
+            <div
+              aria-hidden="true"
+              className="absolute -right-10 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full bg-lime"
+            />
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 200 200"
+              className="absolute right-2 top-1/2 h-28 w-28 -translate-y-1/2 text-forest/35 sm:h-36 sm:w-36"
+              fill="none"
+            >
+              <circle cx="100" cy="100" r="34" stroke="currentColor" />
+              <circle cx="100" cy="100" r="64" stroke="currentColor" />
+              <circle cx="100" cy="100" r="94" stroke="currentColor" />
+            </svg>
+            <div className="relative flex h-full flex-col justify-between p-3">
+              <span className="label text-butter/60">{model.title}</span>
+              <div className="flex flex-wrap gap-1.5">
+                {model.connectors.map((connector) => (
+                  <span
+                    key={connector}
+                    className="rounded-full border border-butter/25 bg-forest/40 px-2 py-0.5 font-mono text-[0.5625rem] uppercase tracking-[0.06em] text-butter/70"
+                  >
+                    {connector}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-1.5 px-4 pb-4">
+            {model.layers.map((layer) => (
+              <div
+                key={layer.index}
+                className="rounded-md border border-line bg-surface px-2 py-1.5"
+              >
+                <p className="font-mono text-[0.5rem] text-fg-subtle">
+                  {layer.index}
+                </p>
+                <p className="mt-0.5 truncate text-[0.625rem] font-medium leading-tight">
+                  {layer.title}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <div className="p-4">
-        <Layer {...model.layers[0]} />
-        <Connector label={model.connectors[0]} />
-        <Layer {...model.layers[1]} />
-        <Connector label={model.connectors[1]} />
-        <Layer {...model.layers[2]} />
-      </div>
-      <div className="flex items-center justify-between gap-4 border-t border-fg/15 px-4 py-3">
-        <span className="label text-fg/40">{model.footer[0]}</span>
-        <span className="label text-fg/40">{model.footer[1]}</span>
-      </div>
-    </aside>
+    </div>
   );
 }
 
 export function Hero({ dict }: { dict: Dictionary }) {
   return (
-    <section
-      id="top"
-      aria-labelledby="hero-title"
-      className="border-b border-fg/15"
-    >
-      <div className="container-page pt-8 md:pt-12">
+    <section id="top" aria-labelledby="hero-title" className="border-b border-line">
+      <div className="container-page pt-6 pb-12 sm:pt-8 lg:pb-20">
         <div
-          className="enter flex items-center justify-between gap-6 border-b border-fg/15 pb-5"
+          className="enter flex items-center justify-between gap-4 border-b border-line pb-4"
           style={{ "--enter-delay": "0ms" } as CSSProperties}
         >
-          <p className="label flex items-center gap-2.5 text-fg/60">
-            <span aria-hidden="true" className="h-1.5 w-1.5 bg-fg" />
+          <p className="eyebrow text-fg-muted">
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-lime ring-1 ring-fg/25" />
             {dict.hero.eyebrow}
           </p>
-          <p className="label hidden text-fg/50 sm:block">
+          <p className="label hidden text-fg-subtle sm:block">
             {dict.brand.locationShort}
           </p>
         </div>
 
-        <div className="grid gap-8 pt-10 md:pt-14 lg:grid-cols-12">
+        <div className="grid items-end gap-10 pt-10 sm:pt-12 lg:grid-cols-12 lg:items-stretch lg:gap-10 lg:pt-16">
           <div
-            className="enter lg:col-span-9 xl:col-span-10"
+            className="enter lg:col-span-7"
             style={{ "--enter-delay": "80ms" } as CSSProperties}
           >
-            <h1
-              id="hero-title"
-              className="max-w-[16ch] text-[clamp(2.65rem,7.8vw,6.4rem)] font-medium leading-[0.94] tracking-[-0.045em]"
-            >
+            <h1 id="hero-title" className="display-hero max-w-[13ch]">
               {dict.hero.headline}
             </h1>
-          </div>
-          <div className="hidden items-end justify-end lg:col-span-3 lg:flex xl:col-span-2">
-            <p className="label rotate-180 text-fg/40 [writing-mode:vertical-rl]">
-              {dict.hero.verticalTagline}
-            </p>
-          </div>
-        </div>
 
-        <div className="mt-10 grid gap-10 border-t border-fg/15 pt-8 md:mt-14 lg:grid-cols-12 lg:gap-8">
-          <div
-            className="enter lg:col-span-6 xl:col-span-5"
-            style={{ "--enter-delay": "160ms" } as CSSProperties}
-          >
-            <p className="max-w-[46ch] text-[1.0625rem] leading-relaxed text-fg/70 md:text-lg">
+            <p className="mt-6 max-w-[48ch] text-base leading-relaxed text-fg-muted sm:text-lg">
               {dict.hero.description}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="#contact">{dict.hero.primaryCta}</ButtonLink>
-              <ButtonLink href="#work" variant="outline">
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <ButtonLink href="#contact" size="lg">
+                {dict.hero.primaryCta}
+              </ButtonLink>
+              <ButtonLink
+                href="#work"
+                variant="secondary"
+                size="lg"
+                withIcon={false}
+              >
                 {dict.hero.secondaryCta}
               </ButtonLink>
             </div>
           </div>
 
           <div
-            className="enter lg:col-span-5 lg:col-start-8"
-            style={{ "--enter-delay": "240ms" } as CSSProperties}
+            className="enter lg:col-span-5"
+            style={{ "--enter-delay": "160ms" } as CSSProperties}
           >
-            <SystemModel dict={dict} />
+            <SystemPreview dict={dict} />
           </div>
         </div>
 
-        <div className="mt-12 border-t border-fg/15 py-5">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-8">
-            <p className="label shrink-0 text-fg/40">
-              {dict.hero.workingStack}
-            </p>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2">
-              {workingStack.map((item) => (
-                <li
-                  key={item}
-                  className="text-[0.6875rem] font-medium uppercase tracking-[0.14em] text-fg/65"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
+        <div className="mt-12 overflow-hidden border-y border-line py-3 lg:mt-16">
+          <div className="marquee-track flex w-max items-center gap-6">
+            {[0, 1].map((pass) => (
+              <div key={pass} className="flex items-center gap-6" aria-hidden={pass === 1}>
+                {stack.map((item) => (
+                  <span
+                    key={`${pass}-${item}`}
+                    className="flex items-center gap-6 label text-fg-subtle"
+                  >
+                    {item}
+                    <span
+                      aria-hidden="true"
+                      className="h-1 w-1 rounded-full bg-line-strong"
+                    />
+                  </span>
+                ))}
+                <span className="label text-fg-subtle">
+                  {dict.hero.workingStack}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

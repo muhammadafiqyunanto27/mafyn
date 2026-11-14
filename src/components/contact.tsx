@@ -1,109 +1,110 @@
-import { Mail, MapPin, MessageCircle } from "lucide-react";
+import { Mail, MapPin, MessageSquare } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
-import { Reveal } from "@/components/ui/reveal";
 import { site } from "@/content/site";
 import type { Dictionary } from "@/content/types";
 import type { Locale } from "@/i18n/config";
 
-export function Contact({
-  locale,
-  dict,
-}: {
+type ContactProps = {
   locale: Locale;
   dict: Dictionary;
-}) {
-  const copy = dict.contact;
+};
+
+export function Contact({ locale, dict }: ContactProps) {
+  const rows = [
+    {
+      icon: Mail,
+      label: dict.contact.emailLabel,
+      value: site.email,
+      href: `mailto:${site.email}`,
+    },
+    {
+      icon: MessageSquare,
+      label: dict.contact.whatsappLabel,
+      value: site.whatsapp,
+      href: null,
+    },
+    {
+      icon: MapPin,
+      label: dict.contact.studioLabel,
+      value: dict.brand.location,
+      href: null,
+    },
+  ];
 
   return (
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="bg-ink text-paper"
+      className="border-b border-line"
     >
-      <div className="container-page py-20 md:py-28 lg:py-32">
-        <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
-          <Reveal className="lg:col-span-5">
-            <div className="border-t border-paper/15 pt-6 md:pt-8">
-              <p className="label text-paper/55">05 / {copy.label}</p>
-            </div>
+      <div className="container-page section-y">
+        <div className="border-t border-line pt-5 md:pt-6">
+          <p className="eyebrow text-fg-muted">
+            <span
+              aria-hidden="true"
+              className="h-1.5 w-1.5 rounded-full bg-lime ring-1 ring-fg/20"
+            />
+            05 / {dict.contact.label}
+          </p>
+        </div>
 
+        <div className="mt-6 grid gap-10 md:mt-8 md:grid-cols-12 md:gap-10">
+          <div className="md:col-span-5">
             <h2
               id="contact-heading"
-              className="mt-8 max-w-[13ch] text-[clamp(2.2rem,4.6vw,3.75rem)] leading-[0.98] tracking-[-0.04em]"
+              className="display-section max-w-[16ch]"
             >
-              {copy.heading}
+              {dict.contact.heading}
             </h2>
 
-            <p className="mt-6 max-w-[44ch] text-[0.9375rem] leading-relaxed text-paper/65">
-              {copy.intro}
+            <p className="mt-5 max-w-[46ch] text-[0.9375rem] leading-relaxed text-fg-muted">
+              {dict.contact.intro}
             </p>
 
-            <dl className="mt-12 border-t border-paper/15">
-              <div className="grid grid-cols-[7rem_1fr] gap-4 border-b border-paper/15 py-4">
-                <dt className="label flex items-center gap-2 pt-0.5 text-paper/40">
-                  <Mail
-                    aria-hidden="true"
-                    className="h-3.5 w-3.5"
-                    strokeWidth={1.5}
-                  />
-                  {copy.emailLabel}
-                </dt>
-                <dd>
-                  <a
-                    href={`mailto:${site.email}`}
-                    className="link-underline break-all text-sm text-paper/85"
-                  >
-                    {site.email}
-                  </a>
-                </dd>
-              </div>
-
-              <div className="grid grid-cols-[7rem_1fr] gap-4 border-b border-paper/15 py-4">
-                <dt className="label flex items-center gap-2 pt-0.5 text-paper/40">
-                  <MessageCircle
-                    aria-hidden="true"
-                    className="h-3.5 w-3.5"
-                    strokeWidth={1.5}
-                  />
-                  {copy.whatsappLabel}
-                </dt>
-                <dd className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm text-paper/85">
-                    {site.whatsapp}
+            <dl className="mt-8 border-t border-line">
+              {rows.map(({ icon: Icon, label, value, href }) => (
+                <div
+                  key={label}
+                  className="flex items-start gap-3 border-b border-line py-4"
+                >
+                  <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-[0.625rem] border border-line bg-surface">
+                    <Icon
+                      aria-hidden="true"
+                      className="h-4 w-4 text-fg-muted"
+                      strokeWidth={1.6}
+                    />
                   </span>
-                  <span className="border border-paper/20 px-1.5 py-0.5 text-[0.5rem] font-medium uppercase tracking-[0.14em] text-paper/40">
-                    {copy.placeholder}
-                  </span>
-                </dd>
-              </div>
-
-              <div className="grid grid-cols-[7rem_1fr] gap-4 border-b border-paper/15 py-4">
-                <dt className="label flex items-center gap-2 pt-0.5 text-paper/40">
-                  <MapPin
-                    aria-hidden="true"
-                    className="h-3.5 w-3.5"
-                    strokeWidth={1.5}
-                  />
-                  {copy.studioLabel}
-                </dt>
-                <dd className="text-sm text-paper/85">
-                  {dict.brand.location}
-                </dd>
-              </div>
+                  <div className="min-w-0 flex-1">
+                    <dt className="label text-fg-subtle">{label}</dt>
+                    <dd className="mt-1 flex flex-wrap items-center gap-2 text-sm font-medium">
+                      {href ? (
+                        <a href={href} className="link-underline">
+                          {value}
+                        </a>
+                      ) : (
+                        <span>{value}</span>
+                      )}
+                      {label === dict.contact.whatsappLabel && (
+                        <span className="chip">{dict.contact.placeholder}</span>
+                      )}
+                    </dd>
+                  </div>
+                </div>
+              ))}
             </dl>
 
-            <p className="mt-6 max-w-[40ch] text-[0.75rem] leading-relaxed text-paper/40">
-              {copy.directNote}
+            <p className="mt-5 max-w-[46ch] text-xs leading-relaxed text-fg-subtle">
+              {dict.contact.directNote}
             </p>
-          </Reveal>
+          </div>
 
-          <Reveal delay={120} className="lg:col-span-7 lg:pl-10">
+          <div className="md:col-span-7">
             <ContactForm
               locale={locale}
-              copy={copy.form}
+              copy={dict.contact.form}
               email={site.email}
             />
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>
